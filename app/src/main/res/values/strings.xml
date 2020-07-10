@@ -2,4 +2,6 @@
     <string name="app_name">Sample App</string>
     <string name="input_field_hint">Input data...</string>
     <string name="confirm_input_btn_label">Send data</string>
+    <string name="cancel_btn_label">Cancel</string>
+    <string name="ok_btn_label">OK</string>
 </resources>
