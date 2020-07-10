@@ -47,4 +47,17 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(Constants.EXTRA_DATA, inputField.getText().toString());
         startActivityForResult(intent, Constants.REQUEST_CODE);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == Constants.REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                showToast("Success!");
+            } else if (resultCode == RESULT_CANCELED) {
+                inputField.setText("");
+            }
+        }
+    }
 }
