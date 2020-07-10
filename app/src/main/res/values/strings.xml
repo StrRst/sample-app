@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Sample App</string>
+    <string name="input_field_hint">Input data...</string>
+    <string name="confirm_input_btn_label">Send data</string>
 </resources>
