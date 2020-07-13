@@ -1,17 +1,17 @@
 package com.example.sampleapp.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatEditText;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.sampleapp.utils.Constants;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatEditText;
+
 import com.example.sampleapp.R;
+import com.example.sampleapp.utils.Constants;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (TextUtils.isEmpty(inputField.getText().toString())) {
-                    showToast("Error: input field is empty");
+                    showToast(getString(R.string.empty_field_error));
                 } else {
                     startResultActivity();
                 }
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == Constants.REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                showToast("Success!");
+                showToast(getString(R.string.successful_result_toast));
             } else if (resultCode == RESULT_CANCELED) {
                 inputField.setText("");
             }

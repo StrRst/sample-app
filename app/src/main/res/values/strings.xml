@@ -4,4 +4,6 @@
     <string name="confirm_input_btn_label">Send data</string>
     <string name="cancel_btn_label">Cancel</string>
     <string name="ok_btn_label">OK</string>
+    <string name="empty_field_error">Error: input field is empty</string>
+    <string name="successful_result_toast">Success!</string>
 </resources>
