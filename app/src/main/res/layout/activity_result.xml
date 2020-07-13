@@ -1,43 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
     tools:context=".activity.ResultActivity">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/received_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
         android:layout_marginHorizontal="@dimen/received_text_horizontal_margin"
+        android:layout_marginBottom="@dimen/received_text_bottom_margin"
+        android:gravity="center"
         android:textColor="@color/received_text_color"
         android:textSize="@dimen/received_text_size"
-        android:gravity="center"/>
+        tools:text="Test" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/cancel_btn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/buttons_block_top_margin"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:layout_below="@id/received_text"
+        android:layout_toStartOf="@id/button_spacing"
+        android:text="@string/cancel_btn_label" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/cancel_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cancel_btn_label"/>
+    <View
+        android:id="@+id/button_spacing"
+        android:layout_width="@dimen/buttons_horizontal_spacing"
+        android:layout_height="0dp"
+        android:layout_below="@id/received_text"
+        android:layout_centerHorizontal="true" />
 
-        <View
-            android:layout_width="@dimen/buttons_horizontal_spacing"
-            android:layout_height="match_parent"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/ok_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/received_text"
+        android:layout_toEndOf="@id/button_spacing"
+        android:text="@string/ok_btn_label" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/ok_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ok_btn_label"/>
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>
