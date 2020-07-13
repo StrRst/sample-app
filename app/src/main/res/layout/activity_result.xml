@@ -15,7 +15,7 @@
         android:layout_marginHorizontal="@dimen/received_text_horizontal_margin"
         android:layout_marginBottom="@dimen/received_text_bottom_margin"
         android:gravity="center"
-        android:textColor="@color/received_text_color"
+        android:textColor="@color/primary_text"
         android:textSize="@dimen/received_text_size"
         tools:text="Test" />
 
@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/received_text"
         android:layout_toStartOf="@id/button_spacing"
+        style="@style/ButtonTheme"
         android:text="@string/cancel_btn_label" />
 
     <View
@@ -40,6 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/received_text"
         android:layout_toEndOf="@id/button_spacing"
+        style="@style/ButtonTheme"
         android:text="@string/ok_btn_label" />
 
 </RelativeLayout>
