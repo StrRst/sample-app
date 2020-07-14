@@ -4,14 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.example.sampleapp.R;
+import com.example.sampleapp.activity.base.BaseActivity;
 import com.example.sampleapp.utils.Constants;
 
-public class ResultActivity extends AppCompatActivity {
+public class ResultActivity extends BaseActivity {
 
     private AppCompatTextView receivedText;
     private AppCompatButton okButton;
@@ -27,8 +27,8 @@ public class ResultActivity extends AppCompatActivity {
         cancelButton = findViewById(R.id.cancel_btn);
 
         setReceivedText();
-
         setButtonClickListeners();
+        initToolbarWithNavigation(getString(R.string.app_name));
     }
 
     private void setReceivedText() {

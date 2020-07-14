@@ -6,14 +6,14 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 
 import com.example.sampleapp.R;
+import com.example.sampleapp.activity.base.BaseActivity;
 import com.example.sampleapp.utils.Constants;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private AppCompatEditText inputField;
     private AppCompatButton confirmInputButton;
@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        initToolbar(getString(R.string.app_name));
     }
 
     private void showToast(String text) {

@@ -5,6 +5,13 @@
     android:layout_height="match_parent"
     tools:context=".activity.ResultActivity">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/application_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:layout_alignParentTop="true" />
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/received_text"
         android:layout_width="match_parent"
@@ -21,11 +28,11 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/cancel_btn"
+        style="@style/AppTheme.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/received_text"
         android:layout_toStartOf="@id/button_spacing"
-        style="@style/ButtonTheme"
         android:text="@string/cancel_btn_label" />
 
     <View
@@ -37,11 +44,11 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/ok_btn"
+        style="@style/AppTheme.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/received_text"
         android:layout_toEndOf="@id/button_spacing"
-        style="@style/ButtonTheme"
         android:text="@string/ok_btn_label" />
 
 </RelativeLayout>
