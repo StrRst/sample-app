@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.appcompat.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/AppTheme.Toolbar"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/toolbar_height"
-    android:minHeight="@dimen/toolbar_height"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    app:elevation="0dp">
+    app:elevation="0dp"
+    tools:title="@string/app_name">
 
-</Toolbar>
+</androidx.appcompat.widget.Toolbar>

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
@@ -38,10 +37,6 @@ public class MainActivity extends BaseActivity {
         });
 
         initToolbar(getString(R.string.app_name));
-    }
-
-    private void showToast(String text) {
-        Toast.makeText(MainActivity.this, text, Toast.LENGTH_LONG).show();
     }
 
     private void startResultActivity() {
