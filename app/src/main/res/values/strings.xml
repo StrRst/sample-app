@@ -1,11 +1,3 @@
 <resources>
     <string name="app_name">Sample App</string>
-    <string name="input_field_hint">Input data...</string>
-    <string name="confirm_input_btn_label">Send data</string>
-    <string name="cancel_btn_label">Cancel</string>
-    <string name="ok_btn_label">OK</string>
-    <string name="empty_field_error">Error: input field is empty</string>
-    <string name="successful_result_toast">Success!</string>
-    <string name="action_show_activity_name_label">Show activity name</string>
-    <string name="help_button_toast">"Current activity: "</string>
 </resources>
