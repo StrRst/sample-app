@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Sample App</string>
+    <string name="first_test_fragment_title">First fragment</string>
+    <string name="second_test_fragment_title">Second fragment</string>
 </resources>
