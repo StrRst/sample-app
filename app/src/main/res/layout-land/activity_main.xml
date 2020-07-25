@@ -16,20 +16,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/fragments_separator_start"
+        app:layout_constraintEnd_toStartOf="@id/fragments_separator"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         tools:layout="@layout/fragment_chooser" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/fragments_separator_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.4" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/fragments_separator_end"
+        android:id="@+id/fragments_separator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -42,7 +35,7 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/fragments_separator_end"
+        app:layout_constraintStart_toEndOf="@id/fragments_separator"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         tools:layout="@layout/fragment_viewer" />
 

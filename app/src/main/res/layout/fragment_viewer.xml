@@ -8,16 +8,17 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/laptop_info"
-        style="@style/TextViewTheme"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/laptop_info_horizontal_margin"
-        android:gravity="center|start"
+        android:layout_marginStart="@dimen/laptop_info_start_margin"
+        android:layout_marginEnd="@dimen/laptop_info_end_margin"
+        android:gravity="start"
+        android:textColor="@color/primary_text"
         android:textSize="@dimen/laptop_info_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Test" />
+        tools:text="Parameter 1: value 1\nParameter 2: value 2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,7 +15,7 @@ public class ViewerFragment extends Fragment {
     private AppCompatTextView laptopInfo;
 
     public ViewerFragment() {
-        // Required empty public constructor
+
     }
 
     @Override

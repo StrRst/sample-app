@@ -1,31 +1,35 @@
 package com.example.sampleapp.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
-import androidx.appcompat.widget.AppCompatButton;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sampleapp.R;
-import com.example.sampleapp.listener.LaptopSelectListener;
+import com.example.sampleapp.adapter.LaptopRecyclerAdapter;
+import com.example.sampleapp.listener.OnLaptopRecyclerItemClickListener;
+import com.example.sampleapp.listener.OnLaptopSelectListener;
 import com.example.sampleapp.model.Laptop;
-import com.example.sampleapp.utils.Constants;
 
 import java.util.List;
 
 public class ChooserFragment extends Fragment {
 
+    private static final String TAG = ChooserFragment.class.getSimpleName();
+
+    private RecyclerView recyclerView;
     private List<Laptop> laptopList;
-
-    private LinearLayout buttonsBlock;
-
-    private LaptopSelectListener laptopSelectListener;
+    private LaptopRecyclerAdapter adapter;
+    private OnLaptopSelectListener laptopSelectListener;
 
     public ChooserFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -37,37 +41,40 @@ public class ChooserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chooser, container, false);
-
-        buttonsBlock = view.findViewById(R.id.buttons_block);
-
-        Bundle bundle = getArguments();
-        if (bundle == null) {
-            return view;
-        }
-        laptopList = bundle.getParcelableArrayList(Constants.LAPTOP_LIST_FRAGMENT_PARAMETER);
-        if (laptopList == null) {
-            return view;
-        }
-
-        for (int index = 0; index < laptopList.size(); index++) {
-            AppCompatButton button = (AppCompatButton) inflater.inflate(R.layout.button, buttonsBlock, false);
-            button.setText(laptopList.get(index).getName());
-            final int selectedIndex = index;
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (laptopSelectListener != null) {
-                        laptopSelectListener.onLaptopSelect(selectedIndex);
-                    }
-                }
-            });
-            buttonsBlock.addView(button);
-        }
-
+        recyclerView = view.findViewById(R.id.laptop_list);
         return view;
     }
 
-    public void setLaptopSelectListener(LaptopSelectListener laptopSelectListener) {
-        this.laptopSelectListener = laptopSelectListener;
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        laptopList = Laptop.getSampleList();
+
+        adapter = new LaptopRecyclerAdapter(laptopList);
+        adapter.setItemClickListener(new OnLaptopRecyclerItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Laptop selected = null;
+                try {
+                    selected = laptopList.get(position);
+                } catch (IndexOutOfBoundsException e) {
+                    Log.e(TAG, "Retrieving laptop info failed", e);
+                }
+                if (selected == null) {
+                    return;
+                }
+
+                if (laptopSelectListener != null) {
+                    laptopSelectListener.onLaptopSelect(selected);
+                }
+            }
+        });
+
+        recyclerView.setAdapter(adapter);
+    }
+
+    public void setLaptopSelectListener(OnLaptopSelectListener listener) {
+        this.laptopSelectListener = listener;
     }
 }

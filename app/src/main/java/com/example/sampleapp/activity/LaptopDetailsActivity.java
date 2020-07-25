@@ -16,7 +16,7 @@ public class LaptopDetailsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_laptop_details);
 
-        initToolbarWithNavigation(getString(R.string.app_name));
+        initToolbarWithNavigation(getString(R.string.laptop_details_activity_title));
 
         String receivedInfo = getIntent().getStringExtra(Constants.EXTRA_LAPTOP_INFO);
 
