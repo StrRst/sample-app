@@ -28,7 +28,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         toolbar.setTitle(title);
     }
 
-    public void initToolbarWithNavigation(String title) {
+    public void initToolbarWithBackButton(String title) {
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(title);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
@@ -40,7 +40,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         });
     }
 
-    public void showToast(String text) {
+    public void showShortToast(String text) {
+        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+    }
+
+    public void showLongToast(String text) {
         Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
     }
 }

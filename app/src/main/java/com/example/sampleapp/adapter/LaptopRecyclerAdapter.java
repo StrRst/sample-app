@@ -61,6 +61,14 @@ public class LaptopRecyclerAdapter extends RecyclerView.Adapter<LaptopRecyclerAd
         return laptopList.size();
     }
 
+    public List<Laptop> getLaptopList() {
+        return laptopList;
+    }
+
+    public void setLaptopList(List<Laptop> laptopList) {
+        this.laptopList = laptopList;
+    }
+
     public void setItemClickListener(OnLaptopRecyclerItemClickListener listener) {
         this.itemClickListener = listener;
     }

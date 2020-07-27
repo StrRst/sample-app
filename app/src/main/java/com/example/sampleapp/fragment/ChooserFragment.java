@@ -24,7 +24,6 @@ public class ChooserFragment extends Fragment {
     private static final String TAG = ChooserFragment.class.getSimpleName();
 
     private RecyclerView recyclerView;
-    private List<Laptop> laptopList;
     private LaptopRecyclerAdapter adapter;
     private OnLaptopSelectListener laptopSelectListener;
 
@@ -49,15 +48,13 @@ public class ChooserFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        laptopList = Laptop.getSampleList();
-
-        adapter = new LaptopRecyclerAdapter(laptopList);
+        adapter = new LaptopRecyclerAdapter(Laptop.getSampleList());
         adapter.setItemClickListener(new OnLaptopRecyclerItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Laptop selected = null;
                 try {
-                    selected = laptopList.get(position);
+                    selected = adapter.getLaptopList().get(position);
                 } catch (IndexOutOfBoundsException e) {
                     Log.e(TAG, "Retrieving laptop info failed", e);
                 }
@@ -76,5 +73,12 @@ public class ChooserFragment extends Fragment {
 
     public void setLaptopSelectListener(OnLaptopSelectListener listener) {
         this.laptopSelectListener = listener;
+    }
+
+    public void addLaptopToList(Laptop laptop) {
+        List<Laptop> currentList = adapter.getLaptopList();
+        currentList.add(laptop);
+        adapter.notifyItemInserted(currentList.size() - 1);
+        recyclerView.smoothScrollToPosition(recyclerView.getBottom());
     }
 }

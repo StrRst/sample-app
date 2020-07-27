@@ -2,4 +2,12 @@
     <string name="app_name">Sample App</string>
     <string name="main_activity_title">Laptop List</string>
     <string name="laptop_details_activity_title">Laptop Info</string>
+    <string name="add_laptop_activity_title">Add Laptop</string>
+    <string name="manufacturer_input_field_label">Manufacturer</string>
+    <string name="model_input_field_label">Model</string>
+    <string name="screen_size_input_field_label">Screen size</string>
+    <string name="cpu_input_field_label">CPU</string>
+    <string name="price_input_field_label">Price</string>
+    <string name="add_laptop_btn_label">Add</string>
+    <string name="empty_input_field_error">This field cannot be empty</string>
 </resources>
