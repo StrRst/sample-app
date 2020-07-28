@@ -69,6 +69,10 @@ public class AddLaptopActivity extends BaseActivity {
             screenSizeInputField.setError(getString(R.string.empty_input_field_error));
             return false;
         }
+        if (!isValidDouble(screenSizeInputField)) {
+            screenSizeInputField.setError(getString(R.string.invalid_number_input_field_error));
+            return false;
+        }
         if (isInputFieldEmpty(cpuInputField)) {
             cpuInputField.setError(getString(R.string.empty_input_field_error));
             return false;
@@ -77,21 +81,35 @@ public class AddLaptopActivity extends BaseActivity {
             priceInputField.setError(getString(R.string.empty_input_field_error));
             return false;
         }
+        if (!isValidDouble(priceInputField)) {
+            priceInputField.setError(getString(R.string.invalid_number_input_field_error));
+            return false;
+        }
 
         return true;
     }
 
     private void clearInputFieldErrors() {
-        manufacturerInputField.setError("");
-        modelInputField.setError("");
-        screenSizeInputField.setError("");
-        cpuInputField.setError("");
-        priceInputField.setError("");
+        manufacturerInputField.setError(null);
+        modelInputField.setError(null);
+        screenSizeInputField.setError(null);
+        cpuInputField.setError(null);
+        priceInputField.setError(null);
     }
 
     private boolean isInputFieldEmpty(TextInputLayout inputLayout) {
         String fieldContent = getInputFieldText(inputLayout);
         return TextUtils.isEmpty(fieldContent.trim());
+    }
+
+    private boolean isValidDouble(TextInputLayout inputLayout) {
+        String fieldContent = getInputFieldText(inputLayout);
+        try {
+            Double.parseDouble(fieldContent);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     private Laptop createLaptopFromInput() {

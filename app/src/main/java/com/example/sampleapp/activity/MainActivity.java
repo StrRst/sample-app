@@ -87,9 +87,9 @@ public class MainActivity extends BaseActivity {
                     return;
                 }
                 chooserFragment.addLaptopToList(laptop);
-                showShortToast("Laptop added successfully!");
+                showShortToast(getString(R.string.add_laptop_success_toast));
             } else if (resultCode == RESULT_CANCELED) {
-                showShortToast("Operation was cancelled!");
+                showShortToast(getString(R.string.add_laptop_cancelled_toast));
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

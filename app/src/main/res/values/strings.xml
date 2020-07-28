@@ -10,4 +10,7 @@
     <string name="price_input_field_label">Price</string>
     <string name="add_laptop_btn_label">Add</string>
     <string name="empty_input_field_error">This field cannot be empty</string>
+    <string name="invalid_number_input_field_error">This field has to be a valid number</string>
+    <string name="add_laptop_success_toast">Laptop added successfully!</string>
+    <string name="add_laptop_cancelled_toast">Operation was cancelled!</string>
 </resources>
