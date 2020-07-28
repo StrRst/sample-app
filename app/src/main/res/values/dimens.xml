@@ -2,13 +2,13 @@
 <resources>
     <dimen name="laptop_info_start_margin">24dp</dimen>
     <dimen name="laptop_info_end_margin">16dp</dimen>
-    <dimen name="laptop_info_text_size">20sp</dimen>
-    <dimen name="list_item_height">56dp</dimen>
-    <dimen name="list_item_laptop_name_start_margin">8dp</dimen>
-    <dimen name="list_item_laptop_price_end_margin">8dp</dimen>
+    <dimen name="laptop_info_text_size">18sp</dimen>
+    <dimen name="list_item_height">48dp</dimen>
+    <dimen name="list_item_horizontal_padding">16dp</dimen>
+    <dimen name="list_item_vertical_padding">8dp</dimen>
     <dimen name="list_item_text_views_horizontal_spacing">16dp</dimen>
-    <dimen name="list_item_laptop_name_text_size">20sp</dimen>
-    <dimen name="list_item_laptop_price_text_size">20sp</dimen>
+    <dimen name="list_item_laptop_name_text_size">16sp</dimen>
+    <dimen name="list_item_laptop_price_text_size">16sp</dimen>
     <dimen name="floating_action_btn_margin">16dp</dimen>
     <dimen name="content_block_horizontal_padding">16dp</dimen>
     <dimen name="content_block_vertical_padding">16dp</dimen>

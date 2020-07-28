@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    style="@style/ToolbarTheme"
-    app:layout_constraintTop_toTopOf="parent"
-    app:elevation="0dp"
-    tools:title="@string/app_name">
-
-</androidx.appcompat.widget.Toolbar>

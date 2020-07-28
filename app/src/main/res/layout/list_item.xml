@@ -6,44 +6,56 @@
     android:layout_height="@dimen/list_item_height"
     android:background="?android:attr/selectableItemBackground">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/laptop_name"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/list_item_laptop_name_start_margin"
-        android:ellipsize="end"
-        android:lines="1"
-        android:maxLines="1"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/list_item_laptop_name_text_size"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/text_views_horizontal_spacing"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Laptop name" />
-
-    <Space
-        android:id="@+id/text_views_horizontal_spacing"
-        android:layout_width="@dimen/list_item_text_views_horizontal_spacing"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/laptop_price"
-        app:layout_constraintStart_toEndOf="@id/laptop_name"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/laptop_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/list_item_laptop_price_end_margin"
-        android:textColor="@color/list_item_laptop_price_color"
-        android:textSize="@dimen/list_item_laptop_price_text_size"
-        android:textStyle="bold"
+        android:paddingHorizontal="@dimen/list_item_horizontal_padding"
+        android:paddingVertical="@dimen/list_item_vertical_padding"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/text_views_horizontal_spacing"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="499$" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/laptop_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLines="1"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/list_item_laptop_name_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/text_views_horizontal_spacing"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Laptop name" />
+
+        <Space
+            android:id="@+id/text_views_horizontal_spacing"
+            android:layout_width="@dimen/list_item_text_views_horizontal_spacing"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/laptop_price"
+            app:layout_constraintStart_toEndOf="@id/laptop_name"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/laptop_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:maxLines="1"
+            android:textColor="@color/list_item_laptop_price_color"
+            android:textSize="@dimen/list_item_laptop_price_text_size"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/text_views_horizontal_spacing"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="499$" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
         android:id="@+id/divider"
