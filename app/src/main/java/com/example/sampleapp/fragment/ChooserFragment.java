@@ -11,6 +11,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sampleapp.R;
+import com.example.sampleapp.adapter.CountryRecyclerAdapter;
+import com.example.sampleapp.model.Country;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChooserFragment extends Fragment {
 
@@ -38,5 +43,14 @@ public class ChooserFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        List<Country> list = new ArrayList<>();
+        list.add(new Country("Belgium", "Europe"));
+        list.add(new Country("China", "Asia"));
+        list.add(new Country("Ethiopia", "Africa"));
+        list.add(new Country("Norway", "Europe"));
+
+        CountryRecyclerAdapter adapter = new CountryRecyclerAdapter(list);
+        recyclerView.setAdapter(adapter);
     }
 }

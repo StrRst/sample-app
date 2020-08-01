@@ -3,5 +3,15 @@
     <dimen name="country_info_start_margin">24dp</dimen>
     <dimen name="country_info_end_margin">16dp</dimen>
     <dimen name="country_info_text_size">18sp</dimen>
-    <dimen name="list_item_height">48dp</dimen>
+    <dimen name="search_block_horizontal_margin">16dp</dimen>
+    <dimen name="search_block_top_margin">16dp</dimen>
+    <dimen name="search_block_elements_horizontal_spacing">8dp</dimen>
+    <dimen name="country_list_top_margin">8dp</dimen>
+    <dimen name="list_item_height">72dp</dimen>
+    <dimen name="list_item_start_margin">16dp</dimen>
+    <dimen name="list_item_end_margin">16dp</dimen>
+    <dimen name="list_item_elements_horizontal_spacing">8dp</dimen>
+    <dimen name="country_flag_width">84dp</dimen>
+    <dimen name="country_flag_height">56dp</dimen>
+    <dimen name="country_flag_vertical_margin">8dp</dimen>
 </resources>

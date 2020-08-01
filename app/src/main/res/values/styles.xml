@@ -19,4 +19,9 @@
         <item name="android:textSize">20dp</item>
     </style>
 
+    <style name="ButtonStyle" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:backgroundTint">?attr/colorPrimary</item>
+        <item name="android:textColor">@color/element_text</item>
+    </style>
+
 </resources>

@@ -2,4 +2,6 @@
     <string name="app_name">Sample App</string>
     <string name="main_activity_title">Search Country</string>
     <string name="country_details_activity_title">Country Info</string>
+    <string name="country_name_input_field_hint">Enter country name...</string>
+    <string name="search_button_text">Search</string>
 </resources>
