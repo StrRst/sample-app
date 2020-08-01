@@ -7,14 +7,14 @@
     tools:context=".fragment.ViewerFragment">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/laptop_info"
+        android:id="@+id/country_info"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/laptop_info_start_margin"
-        android:layout_marginEnd="@dimen/laptop_info_end_margin"
+        android:layout_marginStart="@dimen/country_info_start_margin"
+        android:layout_marginEnd="@dimen/country_info_end_margin"
         android:gravity="start"
         android:textColor="@color/primary_text"
-        android:textSize="@dimen/laptop_info_text_size"
+        android:textSize="@dimen/country_info_text_size"
         app:layout_constrainedHeight="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

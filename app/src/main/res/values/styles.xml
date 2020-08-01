@@ -19,9 +19,4 @@
         <item name="android:textSize">20dp</item>
     </style>
 
-    <style name="InputFieldStyle">
-        <item name="android:lines">1</item>
-        <item name="android:maxLines">1</item>
-    </style>
-
 </resources>

@@ -7,7 +7,7 @@
     tools:context=".fragment.ChooserFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/laptop_list"
+        android:id="@+id/country_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layoutManager="LinearLayoutManager"
