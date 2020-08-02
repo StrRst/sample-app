@@ -11,20 +11,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sampleapp.R;
 import com.example.sampleapp.listener.OnCountryRecyclerItemClickListener;
-import com.example.sampleapp.model.Country;
+import com.example.sampleapp.model.CountryItem;
+import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
 
 import java.util.List;
 
 public class CountryRecyclerAdapter extends RecyclerView.Adapter<CountryRecyclerAdapter.ViewHolder> {
 
-    private List<Country> items;
+    private List<CountryItem> items;
     private OnCountryRecyclerItemClickListener listener;
 
-    public CountryRecyclerAdapter(List<Country> items) {
+    public CountryRecyclerAdapter(List<CountryItem> items) {
         this.items = items;
     }
 
-    public CountryRecyclerAdapter(List<Country> items, OnCountryRecyclerItemClickListener listener) {
+    public CountryRecyclerAdapter(List<CountryItem> items, OnCountryRecyclerItemClickListener listener) {
         this.items = items;
         this.listener = listener;
     }
@@ -40,17 +41,32 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<CountryRecycler
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Country country = items.get(position);
+        CountryItem country = items.get(position);
 
         holder.name.setText(country.getName());
         holder.region.setText(country.getRegion());
-        holder.flag.setImageResource(R.drawable.ic_flag_placeholder);
+
+//        Glide.with(holder.flag)
+//                .load(country.getFlagUrl())
+//                .placeholder(R.drawable.ic_flag_placeholder)
+//                .into(holder.flag);
+
+        GlideToVectorYou.init()
+                .with(holder.flag.getContext())
+                .setPlaceHolder(R.drawable.ic_flag_placeholder, R.drawable.ic_flag_placeholder)
+                .load(country.getFlagUrl(), holder.flag);
 
         if (position == items.size() - 1) {
             holder.divider.setVisibility(View.INVISIBLE);
         } else {
             holder.divider.setVisibility(View.VISIBLE);
         }
+
+        holder.container.setOnClickListener(view -> {
+            if (listener != null) {
+                listener.onItemClick();
+            }
+        });
     }
 
     @Override
@@ -58,16 +74,17 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<CountryRecycler
         return items.size();
     }
 
-    public List<Country> getItems() {
+    public List<CountryItem> getItems() {
         return items;
     }
 
-    public void setItems(List<Country> items) {
+    public void setItems(List<CountryItem> items) {
         this.items = items;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        View container;
         AppCompatImageView flag;
         TextView name;
         TextView region;
@@ -76,6 +93,7 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<CountryRecycler
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            container = itemView;
             flag = itemView.findViewById(R.id.country_flag);
             name = itemView.findViewById(R.id.country_name);
             region = itemView.findViewById(R.id.country_region);
