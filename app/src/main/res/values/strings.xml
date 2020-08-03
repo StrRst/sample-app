@@ -4,4 +4,6 @@
     <string name="country_details_activity_title">Country Info</string>
     <string name="country_name_input_field_hint">Enter country name...</string>
     <string name="search_button_text">Search</string>
+    <string name="api_callback_unhandled_error">\"Unhandled error! Code: \"</string>
+    <string name="api_callback_unexpected_error">\"Unexpected error! Details: \"</string>
 </resources>

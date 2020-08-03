@@ -1,5 +1,7 @@
 package com.example.sampleapp.api;
 
+import com.example.sampleapp.R;
+import com.example.sampleapp.app.App;
 import com.example.sampleapp.model.CountryErrorItem;
 
 import java.lang.annotation.Annotation;
@@ -21,19 +23,23 @@ public abstract class ApiCallback<T> implements Callback<T> {
         if (response.isSuccessful()) {
             success(response);
         } else {
-            Converter<ResponseBody, CountryErrorItem> converter = RestClient.getInstance().getRetrofit().responseBodyConverter(CountryErrorItem.class, new Annotation[0]);
+            Converter<ResponseBody, CountryErrorItem> converter = RestClient.getInstance()
+                    .getRetrofit()
+                    .responseBodyConverter(CountryErrorItem.class, new Annotation[0]);
 
             try {
                 CountryErrorItem countryError = converter.convert(response.errorBody());
                 failure(countryError);
             } catch (Exception e) {
-                failure(new CountryErrorItem("Unhandled error! Code: " + response.code()));
+                failure(new CountryErrorItem(App.getContext()
+                        .getString(R.string.api_callback_unhandled_error) + response.code()));
             }
         }
     }
 
     @Override
     public void onFailure(Call<T> call, Throwable t) {
-        failure(new CountryErrorItem("Unexpected error! Details: " + t.getMessage()));
+        failure(new CountryErrorItem(App.getContext()
+                .getString(R.string.api_callback_unexpected_error) + t.getMessage()));
     }
 }

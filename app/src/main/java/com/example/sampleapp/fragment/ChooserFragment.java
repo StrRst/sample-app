@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sampleapp.R;
@@ -57,9 +58,9 @@ public class ChooserFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_chooser, container, false);
 
         recyclerView = view.findViewById(R.id.country_list);
-        loaderBlock = view.findViewById(R.id.loader_block);
         countryInputField = view.findViewById(R.id.country_name_input_field);
         searchButton = view.findViewById(R.id.search_button);
+        loaderBlock = view.findViewById(R.id.loader_block);
 
         return view;
     }
@@ -118,7 +119,10 @@ public class ChooserFragment extends Fragment {
     }
 
     private void showErrorToast(String errorMessage) {
-        Toast.makeText(getActivity().getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+        FragmentActivity currentActivity = getActivity();
+        if (currentActivity != null) {
+            Toast.makeText(currentActivity.getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void showProgressBlock() {

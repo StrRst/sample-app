@@ -46,11 +46,6 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<CountryRecycler
         holder.name.setText(country.getName());
         holder.region.setText(country.getRegion());
 
-//        Glide.with(holder.flag)
-//                .load(country.getFlagUrl())
-//                .placeholder(R.drawable.ic_flag_placeholder)
-//                .into(holder.flag);
-
         GlideToVectorYou.init()
                 .with(holder.flag.getContext())
                 .setPlaceHolder(R.drawable.ic_flag_placeholder, R.drawable.ic_flag_placeholder)
