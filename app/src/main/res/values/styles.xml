@@ -24,4 +24,20 @@
         <item name="android:textColor">@color/element_text</item>
     </style>
 
+    <style name="TableCellTextViewStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:padding">@dimen/table_cell_padding</item>
+        <item name="android:textColor">@color/element_text</item>
+        <item name="android:textSize">@dimen/country_info_text_size</item>
+    </style>
+
+    <style name="FirstColumnCellsStyle" parent="@style/TableCellTextViewStyle">
+        <item name="android:background">@color/primary_light_2</item>
+    </style>
+
+    <style name="SecondColumnCellsStyle" parent="@style/TableCellTextViewStyle">
+        <item name="android:background">@color/primary</item>
+    </style>
+
 </resources>

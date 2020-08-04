@@ -59,7 +59,7 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<CountryRecycler
 
         holder.container.setOnClickListener(view -> {
             if (listener != null) {
-                listener.onItemClick();
+                listener.onItemClick(position);
             }
         });
     }

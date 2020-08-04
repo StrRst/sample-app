@@ -2,5 +2,5 @@ package com.example.sampleapp.listener;
 
 public interface OnCountryRecyclerItemClickListener {
 
-    void onItemClick();
+    void onItemClick(int position);
 }

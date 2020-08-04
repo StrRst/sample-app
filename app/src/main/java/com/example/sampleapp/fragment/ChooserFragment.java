@@ -2,6 +2,7 @@ package com.example.sampleapp.fragment;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.example.sampleapp.R;
 import com.example.sampleapp.adapter.CountryRecyclerAdapter;
 import com.example.sampleapp.api.ApiCallback;
 import com.example.sampleapp.api.RestClient;
+import com.example.sampleapp.listener.OnCountrySelectListener;
 import com.example.sampleapp.model.CountryErrorItem;
 import com.example.sampleapp.model.CountryItem;
 import com.example.sampleapp.utils.KeyboardUtils;
@@ -42,9 +44,14 @@ public class ChooserFragment extends Fragment {
 
     private List<CountryItem> items;
     private CountryRecyclerAdapter adapter;
+    private OnCountrySelectListener listener;
 
     public ChooserFragment() {
 
+    }
+
+    public void setCountrySelectListener(OnCountrySelectListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -71,8 +78,20 @@ public class ChooserFragment extends Fragment {
 
         items = new ArrayList<>();
 
-        adapter = new CountryRecyclerAdapter(items, () -> {
+        adapter = new CountryRecyclerAdapter(items, position -> {
+            CountryItem selected = null;
+            try {
+                selected = adapter.getItems().get(position);
+            } catch (IndexOutOfBoundsException e) {
+                Log.e(TAG, "Retrieving country info failed", e);
+            }
+            if (selected == null) {
+                return;
+            }
 
+            if (listener != null) {
+                listener.onCountrySelect(selected);
+            }
         });
 
         recyclerView.setAdapter(adapter);
@@ -100,21 +119,26 @@ public class ChooserFragment extends Fragment {
 
     private void loadCountries(String countryName) {
         showProgressBlock();
-        RestClient.getInstance().getService().getCountries(countryName).enqueue(new ApiCallback<List<CountryItem>>() {
+        RestClient.getInstance().
+                getService().
+                getCountries(countryName).
+                enqueue(new ApiCallback<List<CountryItem>>() {
 
-            @Override
-            public void success(@NotNull Response<List<CountryItem>> response) {
-                items.clear();
-                items.addAll(response.body());
-                adapter.notifyDataSetChanged();
-                hideProgressBlock();
-            }
+                    @Override
+                    public void success(@NotNull Response<List<CountryItem>> response) {
+                        items.clear();
+                        items.addAll(response.body());
+                        adapter.notifyDataSetChanged();
+                        hideProgressBlock();
+                    }
 
-            @Override
+                    @Override
             public void failure(CountryErrorItem countryError) {
-                showErrorToast(countryError.getMessage());
-                hideProgressBlock();
-            }
+                        String errorMessage = countryError.getMessage();
+                        Log.e(TAG, errorMessage);
+                        showErrorToast(errorMessage);
+                        hideProgressBlock();
+                    }
         });
     }
 

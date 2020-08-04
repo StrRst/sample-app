@@ -5,11 +5,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.sampleapp.R;
+import com.example.sampleapp.model.CountryItem;
 
 public class ViewerFragment extends Fragment {
+
+    private AppCompatTextView nativeName;
+    private AppCompatTextView capital;
+    private AppCompatTextView population;
+    private AppCompatTextView area;
+    private AppCompatTextView languages;
 
     public ViewerFragment() {
 
@@ -24,6 +32,21 @@ public class ViewerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_viewer, container, false);
+
+        nativeName = view.findViewById(R.id.country_native_name);
+        capital = view.findViewById(R.id.country_capital);
+        population = view.findViewById(R.id.country_population);
+        area = view.findViewById(R.id.country_area);
+        languages = view.findViewById(R.id.country_languages);
+
         return view;
+    }
+
+    public void setData(CountryItem country) {
+        nativeName.setText(country.getNativeName());
+        capital.setText(country.getCapital());
+        population.setText(country.getPopulationAsString());
+        area.setText(country.getAreaAsString());
+        languages.setText(country.getLanguagesAsString());
     }
 }

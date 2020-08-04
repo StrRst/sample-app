@@ -1,11 +1,13 @@
 package com.example.sampleapp.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.sampleapp.R;
 import com.example.sampleapp.activity.base.BaseActivity;
 import com.example.sampleapp.fragment.ChooserFragment;
 import com.example.sampleapp.fragment.ViewerFragment;
+import com.example.sampleapp.utils.Constants;
 
 public class MainActivity extends BaseActivity {
 
@@ -32,9 +34,17 @@ public class MainActivity extends BaseActivity {
 
     private void initLandscapeOrientation() {
         viewerFragment = (ViewerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_viewer);
+
+        chooserFragment.setCountrySelectListener(country -> {
+            viewerFragment.setData(country);
+        });
     }
 
     private void initPortraitOrientation() {
-
+        chooserFragment.setCountrySelectListener(country -> {
+            Intent intent = new Intent(MainActivity.this, CountryDetailsActivity.class);
+            intent.putExtra(Constants.COUNTRY_OBJECT, country);
+            startActivity(intent);
+        });
     }
 }

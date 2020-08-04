@@ -6,20 +6,82 @@
     android:layout_height="match_parent"
     tools:context=".fragment.ViewerFragment">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/country_info"
+    <TableLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/country_info_start_margin"
-        android:layout_marginEnd="@dimen/country_info_end_margin"
-        android:gravity="start"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/country_info_text_size"
-        app:layout_constrainedHeight="true"
+        android:layout_marginHorizontal="@dimen/country_info_block_horizontal_margin"
+        android:layout_marginVertical="@dimen/country_info_block_vertical_margin"
+        android:stretchColumns="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Parameter 1: value 1\nParameter 2: value 2" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow android:layout_marginBottom="@dimen/table_rows_vertical_spacing">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/FirstColumnCellsStyle"
+                android:text="@string/country_native_name_label" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/country_native_name"
+                style="@style/SecondColumnCellsStyle"
+                tools:text="Some native name" />
+
+        </TableRow>
+
+        <TableRow android:layout_marginBottom="@dimen/table_rows_vertical_spacing">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/FirstColumnCellsStyle"
+                android:text="@string/country_capital_label" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/country_capital"
+                style="@style/SecondColumnCellsStyle"
+                tools:text="Some capital" />
+
+        </TableRow>
+
+        <TableRow android:layout_marginBottom="@dimen/table_rows_vertical_spacing">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/FirstColumnCellsStyle"
+                android:text="@string/country_population_label" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/country_population"
+                style="@style/SecondColumnCellsStyle"
+                tools:text="123 millions" />
+
+        </TableRow>
+
+        <TableRow android:layout_marginBottom="@dimen/table_rows_vertical_spacing">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/FirstColumnCellsStyle"
+                android:text="@string/country_area_label" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/country_area"
+                style="@style/SecondColumnCellsStyle"
+                tools:text="456 km2" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/FirstColumnCellsStyle"
+                android:text="@string/country_languages_label" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/country_languages"
+                style="@style/SecondColumnCellsStyle"
+                tools:text="First language\nSecond language" />
+
+        </TableRow>
+
+    </TableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
