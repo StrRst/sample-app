@@ -4,10 +4,12 @@
     <dimen name="search_block_top_margin">16dp</dimen>
     <dimen name="search_block_elements_horizontal_spacing">8dp</dimen>
     <dimen name="country_list_top_margin">8dp</dimen>
-    <dimen name="list_item_height">72dp</dimen>
-    <dimen name="list_item_start_margin">16dp</dimen>
-    <dimen name="list_item_end_margin">16dp</dimen>
-    <dimen name="list_item_elements_horizontal_spacing">8dp</dimen>
+    <dimen name="country_list_item_height">72dp</dimen>
+    <dimen name="country_list_item_start_margin">16dp</dimen>
+    <dimen name="country_list_item_end_margin">16dp</dimen>
+    <dimen name="country_list_item_elements_horizontal_spacing">8dp</dimen>
+    <dimen name="country_name_text_size">20sp</dimen>
+    <dimen name="country_region_text_size">16sp</dimen>
     <dimen name="country_flag_width">84dp</dimen>
     <dimen name="country_flag_height">56dp</dimen>
     <dimen name="country_flag_vertical_margin">8dp</dimen>
@@ -16,4 +18,11 @@
     <dimen name="country_info_block_vertical_margin">8dp</dimen>
     <dimen name="table_rows_vertical_spacing">4dp</dimen>
     <dimen name="table_cell_padding">8dp</dimen>
+    <dimen name="history_list_item_height">48dp</dimen>
+    <dimen name="history_list_item_start_margin">16dp</dimen>
+    <dimen name="history_list_item_end_margin">16dp</dimen>
+    <dimen name="history_list_item_elements_horizontal_spacing">16dp</dimen>
+    <dimen name="history_search_string_text_size">20sp</dimen>
+    <dimen name="history_list_item_icon_width">24dp</dimen>
+    <dimen name="history_list_item_icon_height">24dp</dimen>
 </resources>

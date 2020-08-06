@@ -16,8 +16,9 @@ public class RestClient {
 
     private static RestClient sInstance = new RestClient();
 
-    private ApiService service;
+    private Gson gson;
     private Retrofit retrofit;
+    private ApiService service;
 
     private RestClient() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -27,7 +28,7 @@ public class RestClient {
                 .addInterceptor(interceptor)
                 .build();
 
-        Gson gson = new GsonBuilder()
+        gson = new GsonBuilder()
                 .registerTypeAdapter(Uri.class, new UriDeserializer())
                 .create();
 
@@ -44,11 +45,15 @@ public class RestClient {
         return sInstance;
     }
 
-    public ApiService getService() {
-        return service;
+    public Gson getGson() {
+        return gson;
     }
 
     public Retrofit getRetrofit() {
         return retrofit;
+    }
+
+    public ApiService getService() {
+        return service;
     }
 }

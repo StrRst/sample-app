@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/history_list_item_height"
+    android:background="?android:attr/selectableItemBackground">
+
+    <View
+        android:id="@+id/history_list_item_icon"
+        android:layout_width="@dimen/history_list_item_icon_width"
+        android:layout_height="@dimen/history_list_item_icon_height"
+        android:layout_marginStart="@dimen/history_list_item_start_margin"
+        android:background="@drawable/ic_search"
+        android:backgroundTint="?android:attr/textColorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/history_search_string"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/history_search_string"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/history_list_item_elements_horizontal_spacing"
+        android:layout_marginEnd="@dimen/history_list_item_end_margin"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="@dimen/history_search_string_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/history_list_item_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Some search string" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

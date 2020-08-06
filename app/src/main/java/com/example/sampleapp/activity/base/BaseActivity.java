@@ -22,6 +22,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         inLandscapeMode = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
+    public Toolbar getToolbar() {
+        return toolbar;
+    }
+
     public void initToolbar(String title) {
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(title);

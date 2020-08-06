@@ -25,6 +25,8 @@ import com.example.sampleapp.database.AppDatabase;
 import com.example.sampleapp.listener.OnCountrySelectListener;
 import com.example.sampleapp.model.CountryErrorItem;
 import com.example.sampleapp.model.CountryItem;
+import com.example.sampleapp.model.HistoryItems;
+import com.example.sampleapp.utils.HistorySharedPrefsUtils;
 import com.example.sampleapp.utils.KeyboardUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -46,6 +48,8 @@ public class ChooserFragment extends Fragment {
     private List<CountryItem> items;
     private CountryRecyclerAdapter adapter;
     private OnCountrySelectListener listener;
+
+    private HistoryItems historyItems;
 
     public ChooserFragment() {
 
@@ -97,6 +101,8 @@ public class ChooserFragment extends Fragment {
 
         recyclerView.setAdapter(adapter);
 
+        historyItems = HistorySharedPrefsUtils.retrieveHistoryItems(App.getInstance());
+
         searchButton.setOnClickListener(v -> handleSearchAction());
 
         countryInputField.setOnEditorActionListener((textView, actionId, keyEvent) -> {
@@ -107,6 +113,7 @@ public class ChooserFragment extends Fragment {
             return false;
         });
 
+        //TODO: attach observer outside fragment/activity to remove lifecycle dependency
         getDatabase().countryItemDao().getAll().observe(this, countryItems -> {
             items.clear();
             if (countryItems != null && !countryItems.isEmpty()) {
@@ -118,16 +125,36 @@ public class ChooserFragment extends Fragment {
 
     private void handleSearchAction() {
         String input = countryInputField.getText().toString();
+
         if (TextUtils.isEmpty(input)) {
             countryInputField.requestFocus();
-        } else {
-            KeyboardUtils.hide(countryInputField);
-            recyclerView.requestFocus();
-            searchCountries(input);
+            return;
         }
+
+        KeyboardUtils.hide(countryInputField);
+        recyclerView.requestFocus();
+
+        historyItems.addToStart(input);
+        HistorySharedPrefsUtils.saveHistoryItems(App.getInstance(), historyItems);
+
+        searchCountries(input);
     }
 
-    private void searchCountries(String countryName) {
+    public void handleExternalSearchRequest(String searchString) {
+        if (TextUtils.isEmpty(searchString)) {
+            countryInputField.requestFocus();
+            return;
+        }
+
+        recyclerView.requestFocus();
+
+        clearList();
+
+        countryInputField.setText(searchString);
+        searchCountries(searchString);
+    }
+
+    public void searchCountries(String countryName) {
         showProgressBlock();
         RestClient.getInstance().getService().getCountries(countryName)
                 .enqueue(new ApiCallback<List<CountryItem>>() {
@@ -142,9 +169,14 @@ public class ChooserFragment extends Fragment {
                         String errorMessage = countryError.getMessage();
                         Log.e(TAG, errorMessage);
                         showErrorToast(errorMessage);
+
                         hideProgressBlock();
                     }
                 });
+    }
+
+    private void clearList() {
+        getDatabase().countryItemDao().deleteAll();
     }
 
     private void replaceList(List<CountryItem> newList) {

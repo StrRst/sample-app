@@ -2,6 +2,8 @@
     <string name="app_name">Sample App</string>
     <string name="main_activity_title">Search Country</string>
     <string name="country_details_activity_title_constant_part">About\u0020</string>
+    <string name="search_history_activity_title">Search History</string>
+    <string name="action_show_search_history_title">History</string>
     <string name="country_name_input_field_hint">Enter country name...</string>
     <string name="search_button_text">Search</string>
     <string name="api_callback_unhandled_error">\"Unhandled error! Code: \"</string>
