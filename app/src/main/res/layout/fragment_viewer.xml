@@ -20,12 +20,12 @@
         <TableRow android:layout_marginBottom="@dimen/table_rows_vertical_spacing">
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/FirstColumnCellsStyle"
+                style="@style/TableCellTextViewStyle.FirstColumn"
                 android:text="@string/country_native_name_label" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/country_native_name"
-                style="@style/SecondColumnCellsStyle"
+                style="@style/TableCellTextViewStyle.SecondColumn"
                 tools:text="Some native name" />
 
         </TableRow>
@@ -33,12 +33,12 @@
         <TableRow android:layout_marginBottom="@dimen/table_rows_vertical_spacing">
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/FirstColumnCellsStyle"
+                style="@style/TableCellTextViewStyle.FirstColumn"
                 android:text="@string/country_capital_label" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/country_capital"
-                style="@style/SecondColumnCellsStyle"
+                style="@style/TableCellTextViewStyle.SecondColumn"
                 tools:text="Some capital" />
 
         </TableRow>
@@ -46,12 +46,12 @@
         <TableRow android:layout_marginBottom="@dimen/table_rows_vertical_spacing">
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/FirstColumnCellsStyle"
+                style="@style/TableCellTextViewStyle.FirstColumn"
                 android:text="@string/country_population_label" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/country_population"
-                style="@style/SecondColumnCellsStyle"
+                style="@style/TableCellTextViewStyle.SecondColumn"
                 tools:text="123 millions" />
 
         </TableRow>
@@ -59,12 +59,12 @@
         <TableRow android:layout_marginBottom="@dimen/table_rows_vertical_spacing">
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/FirstColumnCellsStyle"
+                style="@style/TableCellTextViewStyle.FirstColumn"
                 android:text="@string/country_area_label" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/country_area"
-                style="@style/SecondColumnCellsStyle"
+                style="@style/TableCellTextViewStyle.SecondColumn"
                 tools:text="456 km2" />
 
         </TableRow>
@@ -72,12 +72,12 @@
         <TableRow>
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/FirstColumnCellsStyle"
+                style="@style/TableCellTextViewStyle.FirstColumn"
                 android:text="@string/country_languages_label" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/country_languages"
-                style="@style/SecondColumnCellsStyle"
+                style="@style/TableCellTextViewStyle.SecondColumn"
                 tools:text="First language\nSecond language" />
 
         </TableRow>

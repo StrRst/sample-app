@@ -32,12 +32,15 @@
         <item name="android:textSize">@dimen/country_info_text_size</item>
     </style>
 
-    <style name="FirstColumnCellsStyle" parent="@style/TableCellTextViewStyle">
+    <style name="TableCellTextViewStyle.FirstColumn">
         <item name="android:background">@color/primary_light_2</item>
     </style>
 
-    <style name="SecondColumnCellsStyle" parent="@style/TableCellTextViewStyle">
+    <style name="TableCellTextViewStyle.SecondColumn">
         <item name="android:background">@color/primary</item>
     </style>
 
+    <style name="AppTheme.EditText">
+        <item name="colorControlNormal">@android:color/secondary_text_dark</item>
+    </style>
 </resources>

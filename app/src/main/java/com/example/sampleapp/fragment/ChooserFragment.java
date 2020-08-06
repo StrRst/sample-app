@@ -14,13 +14,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sampleapp.R;
 import com.example.sampleapp.adapter.CountryRecyclerAdapter;
 import com.example.sampleapp.api.ApiCallback;
 import com.example.sampleapp.api.RestClient;
+import com.example.sampleapp.app.App;
+import com.example.sampleapp.database.AppDatabase;
 import com.example.sampleapp.listener.OnCountrySelectListener;
 import com.example.sampleapp.model.CountryErrorItem;
 import com.example.sampleapp.model.CountryItem;
@@ -105,6 +106,8 @@ public class ChooserFragment extends Fragment {
             }
             return false;
         });
+
+        checkCachedItems();
     }
 
     private void handleSearchAction() {
@@ -113,40 +116,45 @@ public class ChooserFragment extends Fragment {
             countryInputField.requestFocus();
         } else {
             KeyboardUtils.hide(countryInputField);
-            loadCountries(input);
+            recyclerView.requestFocus();
+            searchCountries(input);
         }
     }
 
-    private void loadCountries(String countryName) {
+    private void searchCountries(String countryName) {
         showProgressBlock();
-        RestClient.getInstance().
-                getService().
-                getCountries(countryName).
-                enqueue(new ApiCallback<List<CountryItem>>() {
-
+        RestClient.getInstance().getService().getCountries(countryName)
+                .enqueue(new ApiCallback<List<CountryItem>>() {
                     @Override
                     public void success(@NotNull Response<List<CountryItem>> response) {
-                        items.clear();
-                        items.addAll(response.body());
-                        adapter.notifyDataSetChanged();
+                        replaceList(response.body());
                         hideProgressBlock();
                     }
 
                     @Override
-            public void failure(CountryErrorItem countryError) {
+                    public void failure(CountryErrorItem countryError) {
                         String errorMessage = countryError.getMessage();
                         Log.e(TAG, errorMessage);
                         showErrorToast(errorMessage);
                         hideProgressBlock();
                     }
-        });
+                });
+    }
+
+    private void replaceList(List<CountryItem> newList) {
+        getDatabase().countryItemDao().deleteAll();
+
+        items.clear();
+        if (newList != null && !newList.isEmpty()) {
+            items.addAll(newList);
+        }
+        adapter.notifyDataSetChanged();
+
+        getDatabase().countryItemDao().insert(newList);
     }
 
     private void showErrorToast(String errorMessage) {
-        FragmentActivity currentActivity = getActivity();
-        if (currentActivity != null) {
-            Toast.makeText(currentActivity.getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
-        }
+        Toast.makeText(App.getContext(), errorMessage, Toast.LENGTH_SHORT).show();
     }
 
     private void showProgressBlock() {
@@ -159,5 +167,17 @@ public class ChooserFragment extends Fragment {
         if (loaderBlock != null) {
             loaderBlock.setVisibility(View.GONE);
         }
+    }
+
+    private AppDatabase getDatabase() {
+        return ((App) App.getContext()).getDatabase();
+    }
+
+    private void checkCachedItems() {
+        List<CountryItem> cachedItems = getDatabase().countryItemDao().getAll();
+        if (cachedItems != null && !cachedItems.isEmpty()) {
+            items.addAll(cachedItems);
+        }
+        adapter.notifyDataSetChanged();
     }
 }

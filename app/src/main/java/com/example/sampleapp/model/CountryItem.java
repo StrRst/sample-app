@@ -4,12 +4,18 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.example.sampleapp.database.CountryLanguageListConverter;
+import com.example.sampleapp.database.UriConverter;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
+@Entity(tableName = "countries")
 public class CountryItem implements Parcelable {
 
     public static final Creator<CountryItem> CREATOR = new Creator<CountryItem>() {
@@ -24,18 +30,25 @@ public class CountryItem implements Parcelable {
         }
     };
 
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
     private String name;
     private String region;
     private String nativeName;
     private String capital;
     private int population;
     private double area;
+
+    @TypeConverters({CountryLanguageListConverter.class})
     private List<CountryLanguage> languages;
 
+    @TypeConverters({UriConverter.class})
     @SerializedName("flag")
     private Uri flagUrl;
 
-    public CountryItem(String name, String region, String nativeName, String capital, int population, int area, List<CountryLanguage> languages, Uri flagUrl) {
+    public CountryItem(String name, String region, String nativeName, String capital, int population, double area, List<CountryLanguage> languages, Uri flagUrl) {
         this.name = name;
         this.region = region;
         this.nativeName = nativeName;
@@ -72,6 +85,14 @@ public class CountryItem implements Parcelable {
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -162,10 +183,10 @@ public class CountryItem implements Parcelable {
         StringBuilder result = new StringBuilder();
 
         for (CountryLanguage language : languages) {
-            result.append("\n").append(language.name);
+            result.append(language.getName()).append("\n");
         }
         if (result.length() > 0) {
-            result.deleteCharAt(0);
+            result.setLength(result.length() - 1);
         }
 
         return result.toString();
@@ -176,19 +197,12 @@ public class CountryItem implements Parcelable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CountryItem that = (CountryItem) o;
-        return population == that.population &&
-                area == that.area &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(region, that.region) &&
-                Objects.equals(nativeName, that.nativeName) &&
-                Objects.equals(capital, that.capital) &&
-                Objects.equals(languages, that.languages) &&
-                Objects.equals(flagUrl, that.flagUrl);
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, region, nativeName, capital, population, area, languages, flagUrl);
+        return id;
     }
 
     @Override

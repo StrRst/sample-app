@@ -25,6 +25,7 @@
             android:imeOptions="actionGo"
             android:inputType="text"
             android:maxLines="1"
+            android:theme="@style/AppTheme.EditText"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/search_button"
             app:layout_constraintStart_toStartOf="parent"

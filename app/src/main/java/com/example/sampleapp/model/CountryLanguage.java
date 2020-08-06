@@ -19,23 +19,19 @@ public class CountryLanguage implements Parcelable {
         }
     };
 
-    String name;
-    String nativeName;
+    private String name;
 
-    public CountryLanguage(String name, String nativeName) {
+    public CountryLanguage(String name) {
         this.name = name;
-        this.nativeName = nativeName;
     }
 
     protected CountryLanguage(Parcel in) {
         name = in.readString();
-        nativeName = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
-        dest.writeString(nativeName);
     }
 
     @Override
@@ -51,33 +47,23 @@ public class CountryLanguage implements Parcelable {
         this.name = name;
     }
 
-    public String getNativeName() {
-        return nativeName;
-    }
-
-    public void setNativeName(String nativeName) {
-        this.nativeName = nativeName;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CountryLanguage that = (CountryLanguage) o;
-        return Objects.equals(name, that.name) &&
-                Objects.equals(nativeName, that.nativeName);
+        CountryLanguage language = (CountryLanguage) o;
+        return Objects.equals(name, language.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, nativeName);
+        return Objects.hash(name);
     }
 
     @Override
     public String toString() {
         return "CountryLanguage{" +
                 "name='" + name + '\'' +
-                ", nativeName='" + nativeName + '\'' +
                 '}';
     }
 }
