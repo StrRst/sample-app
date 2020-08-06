@@ -1,7 +1,6 @@
 package com.example.sampleapp.app;
 
 import android.app.Application;
-import android.content.Context;
 
 import androidx.room.Room;
 
@@ -9,26 +8,26 @@ import com.example.sampleapp.database.AppDatabase;
 
 public class App extends Application {
 
-    private static Context context;
+    private static App instance;
 
     private AppDatabase appDatabase;
 
-    public static Context getContext() {
-        return context;
-    }
-
-    public AppDatabase getDatabase() {
-        return appDatabase;
+    public static App getInstance() {
+        return instance;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        context = this;
+        instance = this;
 
         appDatabase = Room.databaseBuilder(this, AppDatabase.class, "country_db")
                 .allowMainThreadQueries() //TODO: Replace with performing database interactions in separate thread
                 .build();
+    }
+
+    public AppDatabase getDatabase() {
+        return appDatabase;
     }
 }

@@ -31,7 +31,7 @@ public abstract class ApiCallback<T> implements Callback<T> {
                 CountryErrorItem countryError = converter.convert(response.errorBody());
                 failure(countryError);
             } catch (Exception e) {
-                failure(new CountryErrorItem(App.getContext()
+                failure(new CountryErrorItem(App.getInstance()
                         .getString(R.string.api_callback_unhandled_error) + response.code()));
             }
         }
@@ -39,7 +39,7 @@ public abstract class ApiCallback<T> implements Callback<T> {
 
     @Override
     public void onFailure(Call<T> call, Throwable t) {
-        failure(new CountryErrorItem(App.getContext()
+        failure(new CountryErrorItem(App.getInstance()
                 .getString(R.string.api_callback_unexpected_error) + t.getMessage()));
     }
 }

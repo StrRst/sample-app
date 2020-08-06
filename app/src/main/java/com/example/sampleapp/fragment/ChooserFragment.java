@@ -107,7 +107,13 @@ public class ChooserFragment extends Fragment {
             return false;
         });
 
-        checkCachedItems();
+        getDatabase().countryItemDao().getAll().observe(this, countryItems -> {
+            items.clear();
+            if (countryItems != null && !countryItems.isEmpty()) {
+                items.addAll(countryItems);
+            }
+            adapter.notifyDataSetChanged();
+        });
     }
 
     private void handleSearchAction() {
@@ -143,18 +149,11 @@ public class ChooserFragment extends Fragment {
 
     private void replaceList(List<CountryItem> newList) {
         getDatabase().countryItemDao().deleteAll();
-
-        items.clear();
-        if (newList != null && !newList.isEmpty()) {
-            items.addAll(newList);
-        }
-        adapter.notifyDataSetChanged();
-
         getDatabase().countryItemDao().insert(newList);
     }
 
     private void showErrorToast(String errorMessage) {
-        Toast.makeText(App.getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+        Toast.makeText(App.getInstance(), errorMessage, Toast.LENGTH_SHORT).show();
     }
 
     private void showProgressBlock() {
@@ -170,14 +169,6 @@ public class ChooserFragment extends Fragment {
     }
 
     private AppDatabase getDatabase() {
-        return ((App) App.getContext()).getDatabase();
-    }
-
-    private void checkCachedItems() {
-        List<CountryItem> cachedItems = getDatabase().countryItemDao().getAll();
-        if (cachedItems != null && !cachedItems.isEmpty()) {
-            items.addAll(cachedItems);
-        }
-        adapter.notifyDataSetChanged();
+        return App.getInstance().getDatabase();
     }
 }
