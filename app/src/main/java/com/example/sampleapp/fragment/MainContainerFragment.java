@@ -21,7 +21,6 @@ public class MainContainerFragment extends BaseFragment {
 
     private boolean inLandscapeMode;
 
-    private Toolbar toolbar;
     private ChooserFragment chooserFragment;
     private ViewerFragment viewerFragment;
 
@@ -39,9 +38,7 @@ public class MainContainerFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_container, container, false);
-
-        toolbar = view.findViewById(R.id.toolbar);
+        View view = inflater.inflate(R.layout.fragment_main_container, container, false);
 
         return view;
     }
@@ -50,7 +47,7 @@ public class MainContainerFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        initToolbar(getString(R.string.main_activity_title));
+        initToolbar(view, getString(R.string.main_activity_title));
         initToolbarMenu();
 
         chooserFragment = (ChooserFragment) getChildFragmentManager().findFragmentById(R.id.fragment_chooser);
@@ -64,11 +61,8 @@ public class MainContainerFragment extends BaseFragment {
         performReceivedSearchRequest();
     }
 
-    public void initToolbar(String title) {
-        toolbar.setTitle(title);
-    }
-
     private void initToolbarMenu() {
+        Toolbar toolbar = getToolbar();
         toolbar.inflateMenu(R.menu.main_activity_menu);
         toolbar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {

@@ -1,44 +1,33 @@
 package com.example.sampleapp.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.FragmentContainerView;
 
 import com.example.sampleapp.R;
-import com.example.sampleapp.adapter.SearchHistoryRecyclerAdapter;
 import com.example.sampleapp.base.BaseActivity;
-import com.example.sampleapp.model.HistoryItems;
-import com.example.sampleapp.utils.Constants;
-import com.example.sampleapp.utils.HistorySharedPrefsUtils;
+import com.example.sampleapp.fragment.SearchHistoryContainerFragment;
 
 public class SearchHistoryActivity extends BaseActivity {
 
-    private RecyclerView recyclerView;
-
-    private SearchHistoryRecyclerAdapter adapter;
+    private FragmentContainerView fragmentContainerView;
+    private SearchHistoryContainerFragment historyContainerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_history);
 
-        initToolbarWithBackButton(getString(R.string.search_history_activity_title));
+        fragmentContainerView = findViewById(R.id.fragment_container_view);
 
-        HistoryItems historyItems = HistorySharedPrefsUtils.retrieveHistoryItems(this);
+        historyContainerFragment = (SearchHistoryContainerFragment) getSupportFragmentManager()
+                .findFragmentById(fragmentContainerView.getId());
 
-        adapter = new SearchHistoryRecyclerAdapter(historyItems, position -> {
-            String searchString = adapter.getItems().get(position);
-            startMainActivity(searchString);
-        });
-
-        recyclerView = findViewById(R.id.search_history_list);
-        recyclerView.setAdapter(adapter);
-    }
-
-    private void startMainActivity(String searchString) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra(Constants.SEARCH_STRING, searchString);
-        startActivity(intent);
+        if (historyContainerFragment == null) {
+            historyContainerFragment = new SearchHistoryContainerFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(fragmentContainerView.getId(), historyContainerFragment)
+                    .commit();
+        }
     }
 }
