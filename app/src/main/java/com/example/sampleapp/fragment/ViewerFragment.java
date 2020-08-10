@@ -6,12 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.fragment.app.Fragment;
 
 import com.example.sampleapp.R;
+import com.example.sampleapp.base.BaseFragment;
 import com.example.sampleapp.model.CountryItem;
 
-public class ViewerFragment extends Fragment {
+public class ViewerFragment extends BaseFragment {
 
     private AppCompatTextView nativeName;
     private AppCompatTextView capital;

@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sampleapp.R;
@@ -21,6 +20,7 @@ import com.example.sampleapp.adapter.CountryRecyclerAdapter;
 import com.example.sampleapp.api.ApiCallback;
 import com.example.sampleapp.api.RestClient;
 import com.example.sampleapp.app.App;
+import com.example.sampleapp.base.BaseFragment;
 import com.example.sampleapp.database.AppDatabase;
 import com.example.sampleapp.listener.OnCountrySelectListener;
 import com.example.sampleapp.model.CountryErrorItem;
@@ -36,7 +36,7 @@ import java.util.List;
 
 import retrofit2.Response;
 
-public class ChooserFragment extends Fragment {
+public class ChooserFragment extends BaseFragment {
 
     private static final String TAG = ChooserFragment.class.getSimpleName();
 

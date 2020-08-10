@@ -6,8 +6,8 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sampleapp.R;
-import com.example.sampleapp.activity.base.BaseActivity;
 import com.example.sampleapp.adapter.SearchHistoryRecyclerAdapter;
+import com.example.sampleapp.base.BaseActivity;
 import com.example.sampleapp.model.HistoryItems;
 import com.example.sampleapp.utils.Constants;
 import com.example.sampleapp.utils.HistorySharedPrefsUtils;

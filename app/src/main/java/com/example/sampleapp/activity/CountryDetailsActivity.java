@@ -3,7 +3,7 @@ package com.example.sampleapp.activity;
 import android.os.Bundle;
 
 import com.example.sampleapp.R;
-import com.example.sampleapp.activity.base.BaseActivity;
+import com.example.sampleapp.base.BaseActivity;
 import com.example.sampleapp.fragment.ViewerFragment;
 import com.example.sampleapp.model.CountryItem;
 import com.example.sampleapp.utils.Constants;
@@ -19,11 +19,22 @@ public class CountryDetailsActivity extends BaseActivity {
 
         CountryItem receivedCountry = getIntent().getParcelableExtra(Constants.COUNTRY_OBJECT);
 
-        if (receivedCountry != null) {
-            initToolbarWithBackButton(getString(R.string.country_details_activity_title_constant_part) + receivedCountry.getName());
+        initToolbar(receivedCountry);
 
-            viewerFragment = (ViewerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_viewer);
+        viewerFragment = (ViewerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_viewer);
+
+        if (receivedCountry != null) {
             viewerFragment.setData(receivedCountry);
         }
+    }
+
+    private void initToolbar(CountryItem country) {
+        String toolbarTitle = getString(R.string.country_details_activity_title_constant_part);
+
+        if (country != null) {
+            toolbarTitle += country.getName();
+        }
+
+        initToolbarWithBackButton(toolbarTitle);
     }
 }
