@@ -2,39 +2,32 @@ package com.example.sampleapp.activity;
 
 import android.os.Bundle;
 
+import androidx.fragment.app.FragmentContainerView;
+
 import com.example.sampleapp.R;
 import com.example.sampleapp.base.BaseActivity;
-import com.example.sampleapp.fragment.ViewerFragment;
-import com.example.sampleapp.model.CountryItem;
-import com.example.sampleapp.utils.Constants;
+import com.example.sampleapp.fragment.CountryDetailsContainerFragment;
 
 public class CountryDetailsActivity extends BaseActivity {
 
-    private ViewerFragment viewerFragment;
+    private FragmentContainerView fragmentContainerView;
+    private CountryDetailsContainerFragment detailsContainerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_country_details);
 
-        CountryItem receivedCountry = getIntent().getParcelableExtra(Constants.COUNTRY_OBJECT);
+        fragmentContainerView = findViewById(R.id.fragment_container_view);
 
-        initToolbar(receivedCountry);
+        detailsContainerFragment = (CountryDetailsContainerFragment) getSupportFragmentManager()
+                .findFragmentById(fragmentContainerView.getId());
 
-        viewerFragment = (ViewerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_viewer);
-
-        if (receivedCountry != null) {
-            viewerFragment.setData(receivedCountry);
+        if (detailsContainerFragment == null) {
+            detailsContainerFragment = new CountryDetailsContainerFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(fragmentContainerView.getId(), detailsContainerFragment)
+                    .commit();
         }
-    }
-
-    private void initToolbar(CountryItem country) {
-        String toolbarTitle = getString(R.string.country_details_activity_title_constant_part);
-
-        if (country != null) {
-            toolbarTitle += country.getName();
-        }
-
-        initToolbarWithBackButton(toolbarTitle);
     }
 }

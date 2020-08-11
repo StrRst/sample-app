@@ -114,7 +114,7 @@ public class ChooserFragment extends BaseFragment {
         });
 
         //TODO: attach observer outside fragment/activity to remove lifecycle dependency
-        getDatabase().countryItemDao().getAll().observe(this, countryItems -> {
+        getDatabase().countryItemDao().getAll().observe(getViewLifecycleOwner(), countryItems -> {
             items.clear();
             if (countryItems != null && !countryItems.isEmpty()) {
                 items.addAll(countryItems);

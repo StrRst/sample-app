@@ -1,7 +1,6 @@
 package com.example.sampleapp.fragment;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,20 +18,11 @@ import com.example.sampleapp.utils.Constants;
 
 public class MainContainerFragment extends BaseFragment {
 
-    private boolean inLandscapeMode;
-
     private ChooserFragment chooserFragment;
     private ViewerFragment viewerFragment;
 
     public MainContainerFragment() {
 
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        inLandscapeMode = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
     @Override
