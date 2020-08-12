@@ -10,16 +10,14 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-    <fragment
-        android:id="@+id/fragment_chooser"
-        android:name="com.example.sampleapp.fragment.ChooserFragment"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/chooser_fragment_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/fragments_separator"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        tools:layout="@layout/fragment_chooser" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/fragments_separator"
@@ -28,15 +26,13 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
-    <fragment
-        android:id="@+id/fragment_viewer"
-        android:name="com.example.sampleapp.fragment.ViewerFragment"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/viewer_fragment_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/fragments_separator"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        tools:layout="@layout/fragment_viewer" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

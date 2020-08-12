@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentContainerView;
 
 import com.example.sampleapp.R;
 import com.example.sampleapp.base.BaseFragment;
@@ -15,6 +16,7 @@ import com.example.sampleapp.utils.Constants;
 
 public class CountryDetailsContainerFragment extends BaseFragment {
 
+    private FragmentContainerView fragmentContainer;
     private ViewerFragment viewerFragment;
 
     private CountryItem receivedCountry;
@@ -37,6 +39,8 @@ public class CountryDetailsContainerFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_country_details_container, container, false);
 
+        fragmentContainer = view.findViewById(R.id.viewer_fragment_container);
+
         return view;
     }
 
@@ -47,17 +51,15 @@ public class CountryDetailsContainerFragment extends BaseFragment {
         receivedCountry = getActivity().getIntent().getParcelableExtra(Constants.COUNTRY_OBJECT);
 
         initToolbar(receivedCountry, view);
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
+        viewerFragment = (ViewerFragment) getChildFragmentManager()
+                .findFragmentById(fragmentContainer.getId());
 
-        // Doing the following in onStart to be sure that
-        // nested fragment's onCreateView has been called
-        viewerFragment = (ViewerFragment) getChildFragmentManager().findFragmentById(R.id.fragment_viewer);
-        if (receivedCountry != null) {
-            viewerFragment.setData(receivedCountry);
+        if (viewerFragment == null) {
+            viewerFragment = ViewerFragment.newInstance(receivedCountry);
+            getChildFragmentManager().beginTransaction()
+                    .add(fragmentContainer.getId(), viewerFragment)
+                    .commit();
         }
     }
 

@@ -40,6 +40,10 @@ public class ChooserFragment extends BaseFragment {
 
     private static final String TAG = ChooserFragment.class.getSimpleName();
 
+    private static final String ARG_SEARCH_STRING = "search_string_param";
+
+    private String searchString;
+
     private RecyclerView recyclerView;
     private AppCompatEditText countryInputField;
     private AppCompatButton searchButton;
@@ -55,6 +59,17 @@ public class ChooserFragment extends BaseFragment {
 
     }
 
+    public static ChooserFragment newInstance(String searchString) {
+        ChooserFragment fragment = new ChooserFragment();
+
+        Bundle args = new Bundle();
+        args.putString(ARG_SEARCH_STRING, searchString);
+
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
     public void setCountrySelectListener(OnCountrySelectListener listener) {
         this.listener = listener;
     }
@@ -62,6 +77,11 @@ public class ChooserFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle args = getArguments();
+        if (args != null) {
+            searchString = args.getString(ARG_SEARCH_STRING);
+        }
     }
 
     @Override
@@ -121,6 +141,10 @@ public class ChooserFragment extends BaseFragment {
             }
             adapter.notifyDataSetChanged();
         });
+
+        if (searchString != null) {
+            handleExternalSearchRequest(searchString);
+        }
     }
 
     private void handleSearchAction() {

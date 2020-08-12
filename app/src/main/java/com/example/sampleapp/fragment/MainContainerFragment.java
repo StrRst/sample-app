@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentContainerView;
 
 import com.example.sampleapp.R;
 import com.example.sampleapp.activity.CountryDetailsActivity;
@@ -17,6 +18,9 @@ import com.example.sampleapp.base.BaseFragment;
 import com.example.sampleapp.utils.Constants;
 
 public class MainContainerFragment extends BaseFragment {
+
+    private FragmentContainerView chooserFragmentContainer;
+    private FragmentContainerView viewerFragmentContainer;
 
     private ChooserFragment chooserFragment;
     private ViewerFragment viewerFragment;
@@ -30,6 +34,9 @@ public class MainContainerFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_container, container, false);
 
+        chooserFragmentContainer = view.findViewById(R.id.chooser_fragment_container);
+        viewerFragmentContainer = view.findViewById(R.id.viewer_fragment_container);
+
         return view;
     }
 
@@ -40,15 +47,29 @@ public class MainContainerFragment extends BaseFragment {
         initToolbar(view, getString(R.string.main_activity_title));
         initToolbarMenu();
 
-        chooserFragment = (ChooserFragment) getChildFragmentManager().findFragmentById(R.id.fragment_chooser);
+        chooserFragment = (ChooserFragment) getChildFragmentManager()
+                .findFragmentById(chooserFragmentContainer.getId());
+
+        if (chooserFragment == null) {
+            Intent intent = getActivity().getIntent();
+
+            if (intent.hasExtra(Constants.SEARCH_STRING)) {
+                String searchString = intent.getStringExtra(Constants.SEARCH_STRING);
+                chooserFragment = ChooserFragment.newInstance(searchString);
+            } else {
+                chooserFragment = new ChooserFragment();
+            }
+
+            getChildFragmentManager().beginTransaction()
+                    .add(chooserFragmentContainer.getId(), chooserFragment)
+                    .commit();
+        }
 
         if (inLandscapeMode) {
             initLandscapeOrientation();
         } else {
             initPortraitOrientation();
         }
-
-        performReceivedSearchRequest();
     }
 
     private void initToolbarMenu() {
@@ -71,7 +92,15 @@ public class MainContainerFragment extends BaseFragment {
     }
 
     private void initLandscapeOrientation() {
-        viewerFragment = (ViewerFragment) getChildFragmentManager().findFragmentById(R.id.fragment_viewer);
+        viewerFragment = (ViewerFragment) getChildFragmentManager()
+                .findFragmentById(viewerFragmentContainer.getId());
+
+        if (viewerFragment == null) {
+            viewerFragment = new ViewerFragment();
+            getChildFragmentManager().beginTransaction()
+                    .add(viewerFragmentContainer.getId(), viewerFragment)
+                    .commit();
+        }
 
         chooserFragment.setCountrySelectListener(country -> {
             viewerFragment.setData(country);
@@ -84,14 +113,5 @@ public class MainContainerFragment extends BaseFragment {
             intent.putExtra(Constants.COUNTRY_OBJECT, country);
             startActivity(intent);
         });
-    }
-
-    private void performReceivedSearchRequest() {
-        Intent intent = getActivity().getIntent();
-        if (intent.hasExtra(Constants.SEARCH_STRING)) {
-            String searchString = intent.getStringExtra(Constants.SEARCH_STRING);
-            chooserFragment.handleExternalSearchRequest(searchString);
-            intent.removeExtra(Constants.SEARCH_STRING);
-        }
     }
 }

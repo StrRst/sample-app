@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.example.sampleapp.R;
@@ -12,6 +14,10 @@ import com.example.sampleapp.base.BaseFragment;
 import com.example.sampleapp.model.CountryItem;
 
 public class ViewerFragment extends BaseFragment {
+
+    private static final String ARG_COUNTRY = "country_param";
+
+    private CountryItem country;
 
     private AppCompatTextView nativeName;
     private AppCompatTextView capital;
@@ -23,9 +29,25 @@ public class ViewerFragment extends BaseFragment {
 
     }
 
+    public static ViewerFragment newInstance(CountryItem country) {
+        ViewerFragment fragment = new ViewerFragment();
+
+        Bundle args = new Bundle();
+        args.putParcelable(ARG_COUNTRY, country);
+
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle args = getArguments();
+        if (args != null) {
+            country = args.getParcelable(ARG_COUNTRY);
+        }
     }
 
     @Override
@@ -42,11 +64,20 @@ public class ViewerFragment extends BaseFragment {
         return view;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        setData(country);
+    }
+
     public void setData(CountryItem country) {
-        nativeName.setText(country.getNativeName());
-        capital.setText(country.getCapital());
-        population.setText(country.getPopulationAsString());
-        area.setText(country.getAreaAsString());
-        languages.setText(country.getLanguagesAsString());
+        if (country != null) {
+            nativeName.setText(country.getNativeName());
+            capital.setText(country.getCapital());
+            population.setText(country.getPopulationAsString());
+            area.setText(country.getAreaAsString());
+            languages.setText(country.getLanguagesAsString());
+        }
     }
 }
