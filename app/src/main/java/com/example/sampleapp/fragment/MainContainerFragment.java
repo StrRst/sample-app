@@ -15,6 +15,7 @@ import com.example.sampleapp.R;
 import com.example.sampleapp.activity.CountryDetailsActivity;
 import com.example.sampleapp.activity.SearchHistoryActivity;
 import com.example.sampleapp.base.BaseFragment;
+import com.example.sampleapp.listener.OnProgressUpdateListener;
 import com.example.sampleapp.utils.Constants;
 
 public class MainContainerFragment extends BaseFragment {
@@ -24,6 +25,8 @@ public class MainContainerFragment extends BaseFragment {
 
     private ChooserFragment chooserFragment;
     private ViewerFragment viewerFragment;
+
+    private View loadingBlock;
 
     public MainContainerFragment() {
 
@@ -36,6 +39,7 @@ public class MainContainerFragment extends BaseFragment {
 
         chooserFragmentContainer = view.findViewById(R.id.chooser_fragment_container);
         viewerFragmentContainer = view.findViewById(R.id.viewer_fragment_container);
+        loadingBlock = view.findViewById(R.id.loading_block);
 
         return view;
     }
@@ -70,6 +74,18 @@ public class MainContainerFragment extends BaseFragment {
         } else {
             initPortraitOrientation();
         }
+
+        chooserFragment.setProgressUpdateListener(new OnProgressUpdateListener() {
+            @Override
+            public void onShowProgressBlock() {
+                showProgressBlock();
+            }
+
+            @Override
+            public void onHideProgressBlock() {
+                hideProgressBlock();
+            }
+        });
     }
 
     private void initToolbarMenu() {
@@ -113,5 +129,17 @@ public class MainContainerFragment extends BaseFragment {
             intent.putExtra(Constants.COUNTRY_OBJECT, country);
             startActivity(intent);
         });
+    }
+
+    private void showProgressBlock() {
+        if (loadingBlock != null) {
+            loadingBlock.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void hideProgressBlock() {
+        if (loadingBlock != null) {
+            loadingBlock.setVisibility(View.GONE);
+        }
     }
 }

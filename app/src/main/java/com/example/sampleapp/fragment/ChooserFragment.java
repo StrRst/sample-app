@@ -23,6 +23,7 @@ import com.example.sampleapp.app.App;
 import com.example.sampleapp.base.BaseFragment;
 import com.example.sampleapp.database.AppDatabase;
 import com.example.sampleapp.listener.OnCountrySelectListener;
+import com.example.sampleapp.listener.OnProgressUpdateListener;
 import com.example.sampleapp.model.CountryErrorItem;
 import com.example.sampleapp.model.CountryItem;
 import com.example.sampleapp.model.HistoryItems;
@@ -47,11 +48,12 @@ public class ChooserFragment extends BaseFragment {
     private RecyclerView recyclerView;
     private AppCompatEditText countryInputField;
     private AppCompatButton searchButton;
-    private View loaderBlock;
 
     private List<CountryItem> items;
     private CountryRecyclerAdapter adapter;
-    private OnCountrySelectListener listener;
+
+    private OnCountrySelectListener countrySelectListener;
+    private OnProgressUpdateListener progressUpdateListener;
 
     private HistoryItems historyItems;
 
@@ -71,7 +73,11 @@ public class ChooserFragment extends BaseFragment {
     }
 
     public void setCountrySelectListener(OnCountrySelectListener listener) {
-        this.listener = listener;
+        this.countrySelectListener = listener;
+    }
+
+    public void setProgressUpdateListener(OnProgressUpdateListener progressUpdateListener) {
+        this.progressUpdateListener = progressUpdateListener;
     }
 
     @Override
@@ -92,7 +98,6 @@ public class ChooserFragment extends BaseFragment {
         recyclerView = view.findViewById(R.id.country_list);
         countryInputField = view.findViewById(R.id.country_name_input_field);
         searchButton = view.findViewById(R.id.search_button);
-        loaderBlock = view.findViewById(R.id.loader_block);
 
         return view;
     }
@@ -114,8 +119,8 @@ public class ChooserFragment extends BaseFragment {
                 return;
             }
 
-            if (listener != null) {
-                listener.onCountrySelect(selected);
+            if (countrySelectListener != null) {
+                countrySelectListener.onCountrySelect(selected);
             }
         });
 
@@ -213,14 +218,14 @@ public class ChooserFragment extends BaseFragment {
     }
 
     private void showProgressBlock() {
-        if (loaderBlock != null) {
-            loaderBlock.setVisibility(View.VISIBLE);
+        if (progressUpdateListener != null) {
+            progressUpdateListener.onShowProgressBlock();
         }
     }
 
     private void hideProgressBlock() {
-        if (loaderBlock != null) {
-            loaderBlock.setVisibility(View.GONE);
+        if (progressUpdateListener != null) {
+            progressUpdateListener.onHideProgressBlock();
         }
     }
 
