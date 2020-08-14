@@ -15,7 +15,7 @@ import com.example.sampleapp.model.CountryItem;
 
 public class ViewerFragment extends BaseFragment {
 
-    private static final String ARG_COUNTRY = "country_param";
+    private static final String ARG_COUNTRY = "COUNTRY";
 
     private CountryItem country;
 

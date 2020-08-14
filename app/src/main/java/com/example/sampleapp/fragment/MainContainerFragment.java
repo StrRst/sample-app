@@ -17,6 +17,7 @@ import com.example.sampleapp.activity.SearchHistoryActivity;
 import com.example.sampleapp.base.BaseFragment;
 import com.example.sampleapp.contract.MainContainerContract;
 import com.example.sampleapp.model.CountryItem;
+import com.example.sampleapp.presenter.ChooserPresenter;
 import com.example.sampleapp.util.Constants;
 
 public class MainContainerFragment extends BaseFragment implements MainContainerContract.View {
@@ -101,18 +102,20 @@ public class MainContainerFragment extends BaseFragment implements MainContainer
                 .findFragmentById(chooserFragmentContainer.getId());
 
         if (chooserFragment == null) {
-            Intent intent = getActivity().getIntent();
+            chooserFragment = new ChooserFragment();
 
+            Intent intent = getActivity().getIntent();
             if (intent.hasExtra(Constants.SEARCH_STRING)) {
-                String searchString = intent.getStringExtra(Constants.SEARCH_STRING);
-                chooserFragment = ChooserFragment.newInstance(searchString);
-            } else {
-                chooserFragment = new ChooserFragment();
+                chooserFragment.setSearchString(intent.getStringExtra(Constants.SEARCH_STRING));
             }
+
+            chooserFragment.setPresenter(new ChooserPresenter());
 
             getChildFragmentManager().beginTransaction()
                     .add(chooserFragmentContainer.getId(), chooserFragment)
                     .commit();
+        } else {
+            chooserFragment.setPresenter(new ChooserPresenter());
         }
     }
 

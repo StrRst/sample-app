@@ -1,8 +1,6 @@
 package com.example.sampleapp.fragment;
 
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,35 +11,25 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sampleapp.R;
 import com.example.sampleapp.adapter.CountryRecyclerAdapter;
-import com.example.sampleapp.api.ApiCallback;
-import com.example.sampleapp.api.RestClient;
 import com.example.sampleapp.app.App;
 import com.example.sampleapp.base.BaseFragment;
-import com.example.sampleapp.database.AppDatabase;
+import com.example.sampleapp.contract.ChooserContract;
 import com.example.sampleapp.listener.OnCountrySelectListener;
 import com.example.sampleapp.listener.OnProgressStateChangeListener;
-import com.example.sampleapp.model.CountryErrorItem;
 import com.example.sampleapp.model.CountryItem;
-import com.example.sampleapp.model.HistoryItems;
-import com.example.sampleapp.util.ApplicationSharedPrefsManager;
 import com.example.sampleapp.util.KeyboardUtils;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Response;
+public class ChooserFragment extends BaseFragment implements ChooserContract.View {
 
-public class ChooserFragment extends BaseFragment {
-
-    private static final String TAG = ChooserFragment.class.getSimpleName();
-
-    private static final String ARG_SEARCH_STRING = "search_string_param";
+    private ChooserContract.Presenter presenter;
 
     private String searchString;
 
@@ -55,21 +43,19 @@ public class ChooserFragment extends BaseFragment {
     private OnCountrySelectListener countrySelectListener;
     private OnProgressStateChangeListener progressStateChangeListener;
 
-    private HistoryItems historyItems;
-
     public ChooserFragment() {
 
     }
 
-    public static ChooserFragment newInstance(String searchString) {
-        ChooserFragment fragment = new ChooserFragment();
+    @Override
+    public void setPresenter(ChooserContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
 
-        Bundle args = new Bundle();
-        args.putString(ARG_SEARCH_STRING, searchString);
-
-        fragment.setArguments(args);
-
-        return fragment;
+    // Regular setter is used because value of the field is not intended
+    // to be preserved after fragment recreation
+    public void setSearchString(String searchString) {
+        this.searchString = searchString;
     }
 
     public void setCountrySelectListener(OnCountrySelectListener listener) {
@@ -78,16 +64,6 @@ public class ChooserFragment extends BaseFragment {
 
     public void setProgressStateChangeListener(OnProgressStateChangeListener progressStateChangeListener) {
         this.progressStateChangeListener = progressStateChangeListener;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        Bundle args = getArguments();
-        if (args != null) {
-            searchString = args.getString(ARG_SEARCH_STRING);
-        }
     }
 
     @Override
@@ -109,15 +85,7 @@ public class ChooserFragment extends BaseFragment {
         items = new ArrayList<>();
 
         adapter = new CountryRecyclerAdapter(items, position -> {
-            CountryItem selected = null;
-            try {
-                selected = adapter.getItems().get(position);
-            } catch (IndexOutOfBoundsException e) {
-                Log.e(TAG, "Retrieving country info failed", e);
-            }
-            if (selected == null) {
-                return;
-            }
+            CountryItem selected = adapter.getItems().get(position);
 
             if (countrySelectListener != null) {
                 countrySelectListener.onCountrySelect(selected);
@@ -125,8 +93,6 @@ public class ChooserFragment extends BaseFragment {
         });
 
         recyclerView.setAdapter(adapter);
-
-        historyItems = ApplicationSharedPrefsManager.retrieveHistoryItems();
 
         searchButton.setOnClickListener(v -> handleSearchAction());
 
@@ -138,98 +104,85 @@ public class ChooserFragment extends BaseFragment {
             return false;
         });
 
-        //TODO: attach observer outside fragment/activity to remove lifecycle dependency
-        getDatabase().countryItemDao().getAll().observe(getViewLifecycleOwner(), countryItems -> {
+        presenter.takeView(this);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (searchString != null) {
+            // Needs to be executed just once after non-null search string has been set
+            presenter.handleRestoreSearchFromHistory(searchString);
+            searchString = null;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.dropView();
+    }
+
+    private void handleSearchAction() {
+        String input = countryInputField.getText().toString();
+
+        presenter.handleInitiateSearch(input);
+    }
+
+    @Override
+    public void showProgress() {
+        if (progressStateChangeListener != null) {
+            progressStateChangeListener.onProgressStateChanged(true);
+        }
+    }
+
+    @Override
+    public void hideProgress() {
+        if (progressStateChangeListener != null) {
+            progressStateChangeListener.onProgressStateChanged(false);
+        }
+    }
+
+    @Override
+    public void hideKeyboard() {
+        KeyboardUtils.hide(countryInputField);
+    }
+
+    @Override
+    public void setInputFieldText(String text) {
+        countryInputField.setText(text);
+    }
+
+    @Override
+    public void setFocusOnContent() {
+        recyclerView.requestFocus();
+    }
+
+    @Override
+    public void displayInputError() {
+        //TODO: show something to user to indicate the error
+        countryInputField.requestFocus();
+    }
+
+    @Override
+    public void displayRequestError(@NonNull String message) {
+        Toast.makeText(App.getInstance(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void observeData(LiveData<List<CountryItem>> countryList) {
+        countryList.observe(this, countryItems -> {
             items.clear();
             if (countryItems != null && !countryItems.isEmpty()) {
                 items.addAll(countryItems);
             }
             adapter.notifyDataSetChanged();
         });
-
-        if (searchString != null) {
-            handleExternalSearchRequest(searchString);
-        }
     }
 
-    private void handleSearchAction() {
-        String input = countryInputField.getText().toString();
-
-        if (TextUtils.isEmpty(input)) {
-            countryInputField.requestFocus();
-            return;
-        }
-
-        KeyboardUtils.hide(countryInputField);
-        recyclerView.requestFocus();
-
-        historyItems.addToStart(input);
-        ApplicationSharedPrefsManager.saveHistoryItems(historyItems);
-
-        searchCountries(input);
-    }
-
-    public void handleExternalSearchRequest(String searchString) {
-        if (TextUtils.isEmpty(searchString)) {
-            countryInputField.requestFocus();
-            return;
-        }
-
-        recyclerView.requestFocus();
-
-        clearList();
-
-        countryInputField.setText(searchString);
-        searchCountries(searchString);
-    }
-
-    public void searchCountries(String countryName) {
-        showProgressBlock();
-        RestClient.getInstance().getService().getCountries(countryName)
-                .enqueue(new ApiCallback<List<CountryItem>>() {
-                    @Override
-                    public void success(@NotNull Response<List<CountryItem>> response) {
-                        replaceList(response.body());
-                        hideProgressBlock();
-                    }
-
-                    @Override
-                    public void failure(CountryErrorItem countryError) {
-                        String errorMessage = countryError.getMessage();
-                        Log.e(TAG, errorMessage);
-                        showErrorToast(errorMessage);
-
-                        hideProgressBlock();
-                    }
-                });
-    }
-
-    private void clearList() {
-        getDatabase().countryItemDao().deleteAll();
-    }
-
-    private void replaceList(List<CountryItem> newList) {
-        getDatabase().countryItemDao().deleteAll();
-        getDatabase().countryItemDao().insert(newList);
-    }
-
-    private void showErrorToast(String errorMessage) {
-        Toast.makeText(App.getInstance(), errorMessage, Toast.LENGTH_SHORT).show();
-    }
-
-    private void showProgressBlock() {
-        if (progressStateChangeListener != null) {
-            progressStateChangeListener.onProgressStateChanged(true);
-        }
-    }
-
-    private void hideProgressBlock() {
-        if (progressStateChangeListener != null) {
-            progressStateChangeListener.onProgressStateChanged(false);
-        }
-    }
-
-    private AppDatabase getDatabase() {
-        return App.getInstance().getDatabase();
+    @Override
+    public void stopObserving(LiveData<List<CountryItem>> countryList) {
+        countryList.removeObservers(this);
     }
 }
