@@ -10,4 +10,9 @@ public class SearchHistoryActivity extends BaseActivity {
     protected BaseFragment initFragment() {
         return new SearchHistoryContainerFragment();
     }
+
+    @Override
+    protected void setPresenter(BaseFragment fragment) {
+
+    }
 }

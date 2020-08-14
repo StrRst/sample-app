@@ -1,4 +1,4 @@
-package com.example.sampleapp.utils;
+package com.example.sampleapp.util;
 
 import com.example.sampleapp.BuildConfig;
 

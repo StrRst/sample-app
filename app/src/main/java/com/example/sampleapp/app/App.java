@@ -16,6 +16,10 @@ public class App extends Application {
         return instance;
     }
 
+    public AppDatabase getDatabase() {
+        return appDatabase;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -25,9 +29,5 @@ public class App extends Application {
         appDatabase = Room.databaseBuilder(this, AppDatabase.class, "country_db")
                 .allowMainThreadQueries() //TODO: Replace with performing database interactions in separate thread
                 .build();
-    }
-
-    public AppDatabase getDatabase() {
-        return appDatabase;
     }
 }

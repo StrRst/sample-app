@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentContainerView;
 import com.example.sampleapp.R;
 import com.example.sampleapp.base.BaseFragment;
 import com.example.sampleapp.model.CountryItem;
-import com.example.sampleapp.utils.Constants;
+import com.example.sampleapp.util.Constants;
 
 public class CountryDetailsContainerFragment extends BaseFragment {
 

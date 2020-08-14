@@ -15,8 +15,8 @@ import com.example.sampleapp.activity.MainActivity;
 import com.example.sampleapp.adapter.SearchHistoryRecyclerAdapter;
 import com.example.sampleapp.base.BaseFragment;
 import com.example.sampleapp.model.HistoryItems;
-import com.example.sampleapp.utils.Constants;
-import com.example.sampleapp.utils.HistorySharedPrefsUtils;
+import com.example.sampleapp.util.ApplicationSharedPrefsManager;
+import com.example.sampleapp.util.Constants;
 
 public class SearchHistoryContainerFragment extends BaseFragment {
 
@@ -49,7 +49,7 @@ public class SearchHistoryContainerFragment extends BaseFragment {
 
         initToolbarWithBackButton(view, getString(R.string.search_history_activity_title));
 
-        HistoryItems historyItems = HistorySharedPrefsUtils.retrieveHistoryItems(getContext());
+        HistoryItems historyItems = ApplicationSharedPrefsManager.retrieveHistoryItems();
 
         adapter = new SearchHistoryRecyclerAdapter(historyItems, position -> {
             String searchString = adapter.getItems().get(position);

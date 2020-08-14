@@ -15,10 +15,13 @@ import com.example.sampleapp.R;
 import com.example.sampleapp.activity.CountryDetailsActivity;
 import com.example.sampleapp.activity.SearchHistoryActivity;
 import com.example.sampleapp.base.BaseFragment;
-import com.example.sampleapp.listener.OnProgressUpdateListener;
-import com.example.sampleapp.utils.Constants;
+import com.example.sampleapp.contract.MainContainerContract;
+import com.example.sampleapp.model.CountryItem;
+import com.example.sampleapp.util.Constants;
 
-public class MainContainerFragment extends BaseFragment {
+public class MainContainerFragment extends BaseFragment implements MainContainerContract.View {
+
+    private MainContainerContract.Presenter presenter;
 
     private FragmentContainerView chooserFragmentContainer;
     private FragmentContainerView viewerFragmentContainer;
@@ -30,6 +33,11 @@ public class MainContainerFragment extends BaseFragment {
 
     public MainContainerFragment() {
 
+    }
+
+    @Override
+    public void setPresenter(MainContainerContract.Presenter presenter) {
+        this.presenter = presenter;
     }
 
     @Override
@@ -51,6 +59,44 @@ public class MainContainerFragment extends BaseFragment {
         initToolbar(view, getString(R.string.main_activity_title));
         initToolbarMenu();
 
+        initChooserFragment();
+
+        if (inLandscapeMode) {
+            initViewerFragment();
+        }
+
+        chooserFragment.setCountrySelectListener(country -> {
+            presenter.onCountrySelect(country, inLandscapeMode);
+        });
+
+        chooserFragment.setProgressStateChangeListener(isActive -> {
+            presenter.onProgressStateChanged(isActive);
+        });
+
+        presenter.takeView(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.dropView();
+    }
+
+    private void initToolbarMenu() {
+        Toolbar toolbar = getToolbar();
+        toolbar.inflateMenu(R.menu.main_activity_menu);
+        toolbar.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.action_show_search_history:
+                    presenter.onHistoryMenuItemClick();
+                    return true;
+                default:
+                    return false;
+            }
+        });
+    }
+
+    private void initChooserFragment() {
         chooserFragment = (ChooserFragment) getChildFragmentManager()
                 .findFragmentById(chooserFragmentContainer.getId());
 
@@ -68,46 +114,9 @@ public class MainContainerFragment extends BaseFragment {
                     .add(chooserFragmentContainer.getId(), chooserFragment)
                     .commit();
         }
-
-        if (inLandscapeMode) {
-            initLandscapeOrientation();
-        } else {
-            initPortraitOrientation();
-        }
-
-        chooserFragment.setProgressUpdateListener(new OnProgressUpdateListener() {
-            @Override
-            public void onShowProgressBlock() {
-                showProgressBlock();
-            }
-
-            @Override
-            public void onHideProgressBlock() {
-                hideProgressBlock();
-            }
-        });
     }
 
-    private void initToolbarMenu() {
-        Toolbar toolbar = getToolbar();
-        toolbar.inflateMenu(R.menu.main_activity_menu);
-        toolbar.setOnMenuItemClickListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.action_show_search_history:
-                    startSearchHistoryActivity();
-                    return true;
-                default:
-                    return false;
-            }
-        });
-    }
-
-    private void startSearchHistoryActivity() {
-        Intent intent = new Intent(getActivity(), SearchHistoryActivity.class);
-        startActivity(intent);
-    }
-
-    private void initLandscapeOrientation() {
+    private void initViewerFragment() {
         viewerFragment = (ViewerFragment) getChildFragmentManager()
                 .findFragmentById(viewerFragmentContainer.getId());
 
@@ -117,29 +126,39 @@ public class MainContainerFragment extends BaseFragment {
                     .add(viewerFragmentContainer.getId(), viewerFragment)
                     .commit();
         }
-
-        chooserFragment.setCountrySelectListener(country -> {
-            viewerFragment.setData(country);
-        });
     }
 
-    private void initPortraitOrientation() {
-        chooserFragment.setCountrySelectListener(country -> {
-            Intent intent = new Intent(getActivity(), CountryDetailsActivity.class);
-            intent.putExtra(Constants.COUNTRY_OBJECT, country);
-            startActivity(intent);
-        });
-    }
-
-    private void showProgressBlock() {
+    @Override
+    public void showProgress() {
         if (loadingBlock != null) {
             loadingBlock.setVisibility(View.VISIBLE);
         }
     }
 
-    private void hideProgressBlock() {
+    @Override
+    public void hideProgress() {
         if (loadingBlock != null) {
             loadingBlock.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void startSearchHistoryActivity() {
+        Intent intent = new Intent(getActivity(), SearchHistoryActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void startDetailsActivity(CountryItem country) {
+        Intent intent = new Intent(getActivity(), CountryDetailsActivity.class);
+        intent.putExtra(Constants.COUNTRY_OBJECT, country);
+        startActivity(intent);
+    }
+
+    @Override
+    public void showCountryDetails(CountryItem country) {
+        if (viewerFragment != null) {
+            viewerFragment.setData(country);
         }
     }
 }

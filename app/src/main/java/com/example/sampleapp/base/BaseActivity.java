@@ -25,11 +25,16 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         if (fragment == null) {
             fragment = initFragment();
+            setPresenter(fragment);
             getSupportFragmentManager().beginTransaction()
                     .add(fragmentContainerView.getId(), fragment)
                     .commit();
+        } else {
+            setPresenter(fragment);
         }
     }
 
     protected abstract BaseFragment initFragment();
+
+    protected abstract void setPresenter(BaseFragment fragment);
 }

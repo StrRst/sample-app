@@ -10,4 +10,9 @@ public class CountryDetailsActivity extends BaseActivity {
     protected BaseFragment initFragment() {
         return new CountryDetailsContainerFragment();
     }
+
+    @Override
+    protected void setPresenter(BaseFragment fragment) {
+
+    }
 }

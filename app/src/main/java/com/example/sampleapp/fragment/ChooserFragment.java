@@ -23,12 +23,12 @@ import com.example.sampleapp.app.App;
 import com.example.sampleapp.base.BaseFragment;
 import com.example.sampleapp.database.AppDatabase;
 import com.example.sampleapp.listener.OnCountrySelectListener;
-import com.example.sampleapp.listener.OnProgressUpdateListener;
+import com.example.sampleapp.listener.OnProgressStateChangeListener;
 import com.example.sampleapp.model.CountryErrorItem;
 import com.example.sampleapp.model.CountryItem;
 import com.example.sampleapp.model.HistoryItems;
-import com.example.sampleapp.utils.HistorySharedPrefsUtils;
-import com.example.sampleapp.utils.KeyboardUtils;
+import com.example.sampleapp.util.ApplicationSharedPrefsManager;
+import com.example.sampleapp.util.KeyboardUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -53,7 +53,7 @@ public class ChooserFragment extends BaseFragment {
     private CountryRecyclerAdapter adapter;
 
     private OnCountrySelectListener countrySelectListener;
-    private OnProgressUpdateListener progressUpdateListener;
+    private OnProgressStateChangeListener progressStateChangeListener;
 
     private HistoryItems historyItems;
 
@@ -76,8 +76,8 @@ public class ChooserFragment extends BaseFragment {
         this.countrySelectListener = listener;
     }
 
-    public void setProgressUpdateListener(OnProgressUpdateListener progressUpdateListener) {
-        this.progressUpdateListener = progressUpdateListener;
+    public void setProgressStateChangeListener(OnProgressStateChangeListener progressStateChangeListener) {
+        this.progressStateChangeListener = progressStateChangeListener;
     }
 
     @Override
@@ -126,7 +126,7 @@ public class ChooserFragment extends BaseFragment {
 
         recyclerView.setAdapter(adapter);
 
-        historyItems = HistorySharedPrefsUtils.retrieveHistoryItems(App.getInstance());
+        historyItems = ApplicationSharedPrefsManager.retrieveHistoryItems();
 
         searchButton.setOnClickListener(v -> handleSearchAction());
 
@@ -164,7 +164,7 @@ public class ChooserFragment extends BaseFragment {
         recyclerView.requestFocus();
 
         historyItems.addToStart(input);
-        HistorySharedPrefsUtils.saveHistoryItems(App.getInstance(), historyItems);
+        ApplicationSharedPrefsManager.saveHistoryItems(historyItems);
 
         searchCountries(input);
     }
@@ -218,14 +218,14 @@ public class ChooserFragment extends BaseFragment {
     }
 
     private void showProgressBlock() {
-        if (progressUpdateListener != null) {
-            progressUpdateListener.onShowProgressBlock();
+        if (progressStateChangeListener != null) {
+            progressStateChangeListener.onProgressStateChanged(true);
         }
     }
 
     private void hideProgressBlock() {
-        if (progressUpdateListener != null) {
-            progressUpdateListener.onHideProgressBlock();
+        if (progressStateChangeListener != null) {
+            progressStateChangeListener.onProgressStateChanged(false);
         }
     }
 
